@@ -1,0 +1,42 @@
+# TinyOS 从零操作系统课程
+
+从零开始、逐课增量构建的一个教学操作系统。每课包含可编辑的学习版
+`lesson-XX-learning/` 与只读的稳定快照 `lesson-XX-stable/`。
+
+- 引导：GRUB + Multiboot2（i386 交接 ABI），随后在 TinyOS 内部进入 x86_64 long mode。
+- 汇编：AT&T 语法。
+- 运行时约束：无 libc（无 `printf`/`malloc`/`memcpy`/`memset`）。
+- 验证：每课都在 QEMU VGA 上可见验证，不以串口为准。
+- 规范权威：Intel SDM、Multiboot2 规范、GNU GRUB；Linux 内核源码仅作工程对照。
+
+## 课程进度
+
+| 课次 | 主题 | 状态 |
+|---|---|---|
+| 00 | 加电 → BIOS → GRUB → Multiboot2 → 保护模式交接 | 稳定 |
+| 01 | 可见的 VGA Hello 内核 | 稳定 |
+| 02 | VGA 控制台：清屏、定位、换行、滚屏 | 稳定 |
+| 03 | PS/2 轮询键盘回显 | 稳定 |
+| 04 | 最小命令 shell：help/about/clear | 稳定 |
+| 05 | Multiboot2 type-6 内存图解析 | 稳定 |
+| 06 | 早期保留感知的物理页分配器 | 稳定 |
+| 07 | 最小 32 位 identity paging | 稳定 |
+| 08 | 进入 x86_64 long mode + 64 位 C shell | 稳定 |
+| 09 | 最小异常 IDT：#UD/#PF 终止诊断 | 稳定 |
+| 10 | 可恢复 #BP：`int3` → report → `iretq` 返回 shell | 稳定 |
+| 11 | 8259A PIC 重映射与首个 IRQ1 硬件中断路径 | 稳定 |
+| 12 | IRQ 驱动 PS/2 键盘 + ring buffer shell | 稳定 |
+| 13 | 8254 PIT 周期 tick（约 100 Hz） | 稳定 |
+| 14 | bitmap 物理页管理器（alloc/free/reserve） | 进行中 |
+| 15+ | 动态页表映射、高半内核、线程、抢占调度 | 计划 |
+
+## 构建与运行
+
+```bash
+cd lessons/lesson-XX-learning
+make clean && make -j"$(nproc)"
+make check
+make run        # QEMU TCG，VGA 交互验证
+```
+
+每课 README 含完整的构建/静态检查/QEMU 验证步骤与调试地图。
