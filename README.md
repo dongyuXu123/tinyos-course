@@ -50,7 +50,8 @@
 | 34 | 有界 process/thread 对象、保存的用户上下文与受控生命周期 | 稳定 |
 | 35 | CPL3-origin IRQ0：单用户线程 RIP/CS/RFLAGS/RSP/SS 保存恢复与有界 PIT 抢占 | 稳定 |
 | 36 | 有界多用户程序运行时与退出回收 | 稳定 |
-| 37 | Linux 风格 task_struct 与任务状态机教学模型 | 学习中 |
+| 37 | Linux 风格 task_struct 与任务状态机教学模型 | 稳定 |
+| 38 | Linux 风格有界等待队列、wake_one/wake_all 与 scheduling-class 抽象 | 稳定 |
 
 ## 构建与运行
 
