@@ -48,7 +48,8 @@
 | 32 | 校验后的内置用户程序镜像与最小加载器 | 稳定 |
 | 33 | 有界 address-space 对象与内核/用户映射所有权 | 稳定 |
 | 34 | 有界 process/thread 对象、保存的用户上下文与受控生命周期 | 稳定 |
-| 35 | CPL3-origin IRQ0：单用户线程 RIP/CS/RFLAGS/RSP/SS 保存恢复与有界 PIT 抢占 | 学习中 |
+| 35 | CPL3-origin IRQ0：单用户线程 RIP/CS/RFLAGS/RSP/SS 保存恢复与有界 PIT 抢占 | 稳定 |
+| 36 | 有界多用户程序运行时与退出回收 | 学习中 |
 
 ## 构建与运行
 
