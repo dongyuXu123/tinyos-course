@@ -64,6 +64,7 @@
 | 48 | Linux 风格时间系统、timerfd-like 模型、睡眠与时钟抽象 | 稳定 |
 | 49 | Linux 风格软中断、tasklet 与 workqueue 有界模型 | 稳定 |
 | 50 | Linux 风格锁、原子操作、per-CPU 数据与内存序 | 稳定 |
+| 51 | Linux 风格模块边界、导出符号与启动初始化序列 | 稳定 |
 
 Lesson 40 对照 Linux `fs/exec.c` 与 `fs/binfmt_elf.c`。Lesson 41 对照 Linux `mm/mmap.c`、`mm/memory.c` 与 `include/linux/mm.h`，仅实现固定元数据、模拟 fault 分类和有界页记账，不执行不安全真实 fault。Lesson 42 对照 Linux `include/linux/uaccess.h`、`mm/usercopy.c` 与 `arch/x86/include/asm/uaccess.h`，仅验证 canonical/range/overflow/VMA 权限并模拟有界 copy，绝不解引用任意用户指针。
 
