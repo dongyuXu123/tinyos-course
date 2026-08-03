@@ -58,6 +58,7 @@
 | 42 | Linux 风格有界 user-pointer 校验与 copy_to_user/copy_from_user 教学模型 | 稳定 |
 | 43 | Linux 风格页缓存、匿名页、脏页元数据与有界回收接口模型 | 稳定 |
 | 44 | Linux 风格文件描述符表、file/inode/dentry 引用与偏移模型 | 稳定 |
+| 45 | Linux 风格 ramfs/initramfs 与最小 VFS 路径查找 | 稳定 |
 
 Lesson 40 对照 Linux `fs/exec.c` 与 `fs/binfmt_elf.c`。Lesson 41 对照 Linux `mm/mmap.c`、`mm/memory.c` 与 `include/linux/mm.h`，仅实现固定元数据、模拟 fault 分类和有界页记账，不执行不安全真实 fault。Lesson 42 对照 Linux `include/linux/uaccess.h`、`mm/usercopy.c` 与 `arch/x86/include/asm/uaccess.h`，仅验证 canonical/range/overflow/VMA 权限并模拟有界 copy，绝不解引用任意用户指针。
 
