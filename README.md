@@ -38,6 +38,7 @@
 | 22 | 固定 event / 计数信号量与生产者—消费者 | 稳定 |
 | 23 | 独立 idle context（无普通 runnable 时的 IRQ0 回退） | 稳定 |
 | 24 | 运行时 GDT/TSS、`rsp0` 与 #PF IST 异常栈 | 稳定 |
+| 25 | 高别名静态栈 guard page 与双别名运行时映射窗口 | 稳定 |
 
 ## 构建与运行
 
