@@ -1,6 +1,6 @@
 # Lesson 29: minimal CPL3 `int 0x80` syscall ABI
 
-> **Course status: learning.**
+> **Course status: stable snapshot (validated; verified build artifacts included).**
 
 The fixed CPL3 user stub loads `SYS_GETTICKS` (0) into `EAX`, executes `int 0x80`, then enters a `hlt` loop. Vector `0x80` is a DPL3 interrupt gate. The handler saves all GPRs, reports the syscall frame, returns ticks in `RAX`, and uses `iretq`. The user frame uses `RFLAGS=0x002` (reserved bit set, IF clear). Scheduler and user IRQs remain disabled; existing CPL3, exception, TSS/IST, IRQ, and VM constraints are inherited unchanged.
 

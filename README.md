@@ -42,7 +42,7 @@
 | 26 | 16 MiB 映射物理范围内的 PMM 扩展 | 稳定 |
 | 27 | final-PT 16 槽双别名 map/unmap 注册表与 PMM 所有权 | 稳定 |
 | 28 | 首次 CPL3 进入与 TSS rsp0 异常栈证明 | 稳定 |
-| 29 | CPL3 `int 0x80` 最小 syscall ABI | 学习中 |
+| 29 | CPL3 `int 0x80` 最小 syscall ABI | 稳定 |
 
 ## 构建与运行
 
