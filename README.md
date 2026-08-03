@@ -52,7 +52,10 @@
 | 36 | 有界多用户程序运行时与退出回收 | 稳定 |
 | 37 | Linux 风格 task_struct 与任务状态机教学模型 | 稳定 |
 | 38 | Linux 风格有界等待队列、wake_one/wake_all 与 scheduling-class 抽象 | 稳定 |
-| 39 | Linux 风格有界 fork/clone：PID/TID/parent 与资源复制/共享边界 | 学习 |
+| 39 | Linux 风格有界 fork/clone：PID/TID/parent 与资源复制/共享边界 | 稳定 |
+| 40 | Linux 风格有界 execve/ELF 段校验与确定性用户栈布局 | 稳定 |
+
+Lesson 40 对照 Linux `fs/exec.c` 与 `fs/binfmt_elf.c`，仅实现无动态分配、无真实子进程执行的教学模型。
 
 ## 构建与运行
 
