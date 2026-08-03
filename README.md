@@ -54,8 +54,9 @@
 | 38 | Linux 风格有界等待队列、wake_one/wake_all 与 scheduling-class 抽象 | 稳定 |
 | 39 | Linux 风格有界 fork/clone：PID/TID/parent 与资源复制/共享边界 | 稳定 |
 | 40 | Linux 风格有界 execve/ELF 段校验与确定性用户栈布局 | 稳定 |
+| 41 | Linux 风格固定 VMA、范围校验与有界 demand page-fault 分类 | 稳定 |
 
-Lesson 40 对照 Linux `fs/exec.c` 与 `fs/binfmt_elf.c`，仅实现无动态分配、无真实子进程执行的教学模型。
+Lesson 40 对照 Linux `fs/exec.c` 与 `fs/binfmt_elf.c`。Lesson 41 对照 Linux `mm/mmap.c`、`mm/memory.c` 与 `include/linux/mm.h`，仅实现固定元数据、模拟 fault 分类和有界页记账，不执行不安全真实 fault。
 
 ## 构建与运行
 
