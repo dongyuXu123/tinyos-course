@@ -1,10 +1,12 @@
-# Lesson 34: bounded address-space object over the validated kernel-embedded user image
+# Lesson 34: bounded process/thread object with saved user context
 
 > **Course status: learning implementation; no stable snapshot.**
 
-The address-space object owns the current single low/high page-table pair. Its bounded window accepts only explicit user mappings; kernel-only/high-alias addresses, duplicate slots, duplicate frames, and release of an already released slot are rejected. The CPL3 program is now a kernel-embedded user image with a descriptor validated before any physical page allocation, mapping, or entry. Validation bounds image bytes and entry length, checks magic/version and offset arithmetic, and reports an image validation/load failure instead of entering an invalid image. The validated image retains the inherited syscall sequence: `SYS_GETTICKS` (0), `SYS_GETPID` (1), `SYS_WRITE_CONSOLE` (2), unknown call (99), then `SYS_EXIT` (3).
+Lesson 34 keeps Lesson 33's validated embedded image, bounded address space, dual aliases, syscall ABI, and controlled exit. It adds one bounded process object (fixed PID 1) and one user thread (fixed TID 1). The process owns the inherited address-space object and image code/stack metadata. The thread owns kernel-stack metadata plus a saved user return context containing the complete syscall frame, syscall/result bookkeeping, and lifecycle state.
 
-The code and stack remain fixed PMM pages. User code is mapped read-only/user, user IF remains disabled, syscall entry saves all GPRs and returns with `iretq`, and `SYS_EXIT` reports the valid frame then intentionally halts. No scheduler or user IRQ handling is added.
+CPL3 entry is now an explicit `READY -> RUNNING` process/thread transition. Every non-exit syscall saves and validates the user context (`USER_CS`, `USER_DS`, image entry, and user stack top). `SYS_EXIT` saves the final context, validates it, performs `RUNNING -> EXITED` for both objects, reports the transition, and intentionally halts. `processinfo` displays ownership and context metadata; `processtest` validates the initial bounded lifecycle. This lesson deliberately adds no user scheduling and no user IRQ handling.
+
+The image remains read-only/user code with a writable/user stack, user IF remains disabled, syscall entry saves all GPRs and returns with `iretq`, and the inherited syscall sequence remains `GETTICKS`, `GETPID`, `WRITE_CONSOLE`, unknown call, then `EXIT`.
 
 ## Validation
 
@@ -13,4 +15,4 @@ make clean && make -j"$(nproc)"
 make check
 ```
 
-Run `vmtest`, then try `vmap 0xffffffff80000000 <phys>`, duplicate `vmap`, and duplicate `vunmap` to observe validation. Run `idtinfo`, then `cpl3test` from a fresh boot. The banner and `about` text identify Lesson 34 and the image validation/load boundary.
+From a fresh QEMU boot, run `processtest`, `processinfo`, then `cpl3test`. The final syscall output must report a validated saved context and process/thread exit. Also run `vmtest`, `vminfo`, and `syscallinfo` to confirm Lesson 33 behavior remains intact. The banner and `about` text identify Lesson 34 and the bounded process/thread context boundary.
