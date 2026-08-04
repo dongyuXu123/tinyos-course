@@ -34,8 +34,15 @@ for command in "$@"; do
   done
   send_key ret; sleep .5
   monitor_cmd "pmemsave 0xb8000 4000 $vga"
-  if [ "$command" = guiinfo ] || [ "$command" = drawtest ]; then
+  if [ "$command" = guiinfo ] || [ "$command" = drawtest ] || [ "$command" = fonttest ] || [ "$command" = canvastest ]; then
     monitor_cmd "pmemsave 0x20000000 4096 $run_dir/framebuffer.bin"
+    python3 - "$run_dir/framebuffer.bin" "$command" <<'PY'
+import pathlib, sys
+raw=pathlib.Path(sys.argv[1]).read_bytes()
+pathlib.Path(sys.argv[1]+'.summary').write_text(
+    'command=%s bytes=%d nonzero=%d checksum=%08x\n' %
+    (sys.argv[2], len(raw), sum(1 for b in raw if b), sum(raw) & 0xffffffff))
+PY
   fi
   python3 - "$vga" "$command" "$run_dir/vga-all.txt" <<'PY'
 import pathlib, sys
