@@ -71,7 +71,8 @@
 | 55 | 阻塞 wait/wake 与 WNOHANG | 学习中 |
 | 56 | init adoption 与有界父进程重挂接 | 稳定 |
 | 57 | 进程退出资源清理账本 | 稳定 |
-| 58 | 有界多子进程 waitpid 选择 | 学习中 |
+| 58 | 有界多子进程 waitpid 选择 | 稳定 |
+| 59 | fork → exec → exit 完整元数据生命周期 | 学习中 |
 
 Lesson 40 对照 Linux `fs/exec.c` 与 `fs/binfmt_elf.c`。Lesson 41 对照 Linux `mm/mmap.c`、`mm/memory.c` 与 `include/linux/mm.h`，仅实现固定元数据、模拟 fault 分类和有界页记账，不执行不安全真实 fault。Lesson 42 对照 Linux `include/linux/uaccess.h`、`mm/usercopy.c` 与 `arch/x86/include/asm/uaccess.h`，仅验证 canonical/range/overflow/VMA 权限并模拟有界 copy，绝不解引用任意用户指针。
 
