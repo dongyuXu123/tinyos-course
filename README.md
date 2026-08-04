@@ -69,6 +69,7 @@
 | 53 | 受控 shell runtime、内置用户镜像与有界命令执行 | 稳定 |
 | 54 | 有界 shell wait、exit status 与 zombie 回收 | 稳定 |
 | 55 | 阻塞 wait/wake 与 WNOHANG | 学习中 |
+| 56 | init adoption 与有界父进程重挂接 | 学习中 |
 
 Lesson 40 对照 Linux `fs/exec.c` 与 `fs/binfmt_elf.c`。Lesson 41 对照 Linux `mm/mmap.c`、`mm/memory.c` 与 `include/linux/mm.h`，仅实现固定元数据、模拟 fault 分类和有界页记账，不执行不安全真实 fault。Lesson 42 对照 Linux `include/linux/uaccess.h`、`mm/usercopy.c` 与 `arch/x86/include/asm/uaccess.h`，仅验证 canonical/range/overflow/VMA 权限并模拟有界 copy，绝不解引用任意用户指针。
 

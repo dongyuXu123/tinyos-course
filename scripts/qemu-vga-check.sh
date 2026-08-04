@@ -41,7 +41,7 @@ text=''.join(chr(raw[i]) if 32 <= raw[i] < 127 else ' ' for i in range(0, len(ra
 pathlib.Path(sys.argv[1]+'.txt').write_text(text)
 pathlib.Path(sys.argv[3]).write_text(pathlib.Path(sys.argv[3]).read_text() + text if pathlib.Path(sys.argv[3]).exists() else text)
 command=sys.argv[2]
-expected='shellrun:' if command in ('shellrun','execpath') else ('init pid/ready' if command=='initinfo' else 'wait block/' if command=='waitblockinfo' else ('timertest:' if command=='timertest' else ('st: module' if command=='moduletest' else ('mictest:' if command=='lockatomictest' else command+':'))))
+expected='shellrun:' if command in ('shellrun','execpath') else ('init pid/ready' if command=='initinfo' else 'adoption init/' if command=='adoptioninfo' else ('wait block/' if command=='waitblockinfo' else ('timertest:' if command=='timertest' else ('st: module' if command=='moduletest' else ('mictest:' if command=='lockatomictest' else command+':')))))
 if expected not in text: raise SystemExit('missing VGA command result: '+command)
 PY
 done
