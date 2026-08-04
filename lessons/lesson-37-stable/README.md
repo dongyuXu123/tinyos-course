@@ -1,4 +1,4 @@
-# Lesson 35: bounded PIT preemption of one CPL3 user thread
+# Lesson 37: Linux 风格 task_struct 与任务状态机教学模型
 
 > **Course status: learning implementation; no stable snapshot.**
 

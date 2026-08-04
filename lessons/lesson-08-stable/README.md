@@ -1,4 +1,4 @@
-# 第八课：从 GRUB 的 32 位交接进入 x86_64 long mode
+# Lesson 08: 从 GRUB 的 32 位交接进入 x86_64 long mode
 
 > **课程状态：学习版（可编辑，尚未归档）**  
 > GRUB 仍按 Multiboot2 **i386** ABI 把控制权交给 ELF32 内核；TinyOS 在自己的 32 位早期入口中建立四级页表、开启 PAE/long mode，并运行真正以 `-m64` 编译的 VGA shell。

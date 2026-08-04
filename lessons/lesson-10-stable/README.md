@@ -1,4 +1,4 @@
-# 第十课：用 `iretq` 从可恢复的 #BP trap 返回 shell
+# Lesson 10: 用 iretq 从可恢复的 #BP trap 返回 shell
 
 > **课程状态：学习版（可编辑，尚未归档）**  
 > 在第九课 exception-only IDT 上增加可恢复的 breakpoint trap：`int3` 进入 vector 3，显示 frame 后以 `iretq` 回到同一份 64 位 polling shell。

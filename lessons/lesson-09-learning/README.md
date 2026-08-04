@@ -1,4 +1,4 @@
-# 第九课：在 x86_64 long mode 中安装最小异常 IDT
+# Lesson 09: 在 x86_64 long mode 中安装最小异常 IDT
 
 > **课程状态：学习版（可编辑，尚未归档）**  
 > 保留第八课的 GRUB Multiboot2 i386 handoff、ELF32 容器和 real x86_64 continuation；本课安装 exception-only IDT，将 `#UD` 与 `#PF` 变成可见、可复现的 VGA 诊断。

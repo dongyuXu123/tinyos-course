@@ -1,4 +1,4 @@
-# 第六课：从原始内存地图分配早期物理页
+# Lesson 06: 从原始内存地图分配早期物理页
 
 > **课程状态：学习版（可编辑，尚未归档）**  
 > TinyOS 仍运行在 GRUB 交接后的 32 位保护模式、未分页阶段。本课在第五课的原始 Multiboot2 memory map 上增加 reservation-aware 的 4 KiB 物理页选择器。

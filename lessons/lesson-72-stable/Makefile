@@ -33,7 +33,7 @@ $(BUILD)/kernel.iso: $(ISO_ROOT)/boot/kernel.elf $(ISO_ROOT)/boot/grub/grub.cfg
 check: $(BUILD)/kernel.elf
 	grub-file --is-x86-multiboot2 $(BUILD)/kernel.elf
 	@grep -q '进程元数据 checkpoint' README.md
-	@grep -q 'l65test' kernel64.c
+		@grep -q 'l72test' kernel64.c
 	@grep -q 'Lesson 72' README.md
 	@printf '%s\n' 'Multiboot2 and Lesson 72 checks passed.'
 run: $(BUILD)/kernel.iso

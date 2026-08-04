@@ -1,4 +1,4 @@
-# Lesson 35: bounded PIT preemption of one CPL3 user thread
+# Lesson 36: 有界多用户程序运行时与退出回收
 
 > **Course status: learning implementation; no stable snapshot.**
 

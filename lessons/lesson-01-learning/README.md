@@ -1,4 +1,4 @@
-# 第一课：从 GRUB 启动并在 VGA 屏幕显示 TinyOS
+# Lesson 01: 从 GRUB 启动并在 VGA 屏幕显示 TinyOS
 
 > **课程状态：学习版（可编辑，尚未归档）**  
 > 目标架构：x86_64 课程的启动第 0 阶段；本课实际接收 GRUB 的 32 位 Multiboot2 交接。  
