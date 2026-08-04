@@ -12,7 +12,7 @@ make check
 run_dir=${QEMU_CHECK_DIR:-build/qemu-check}
 rm -rf "$run_dir"; mkdir -p "$run_dir"
 monitor="$run_dir/monitor.sock"; serial="$run_dir/serial.log"; vga="$run_dir/vga.bin"; trace="$run_dir/qemu-trace.log"
-qemu-system-x86_64 -accel tcg -boot order=d -cdrom build/kernel.iso -display none \
+qemu-system-x86_64 -accel tcg -vga std -boot order=d -cdrom build/kernel.iso -display none \
   -serial "file:$serial" -monitor "unix:$monitor,server=on,wait=off" -no-reboot -no-shutdown \
   -d guest_errors -D "$trace" & qemu_pid=$!
 cleanup() { if kill -0 "$qemu_pid" 2>/dev/null; then printf 'quit\n' | socat - UNIX-CONNECT:"$monitor" >/dev/null 2>&1 || true; kill "$qemu_pid" 2>/dev/null || true; wait "$qemu_pid" 2>/dev/null || true; fi; }
@@ -63,6 +63,7 @@ elif command=='moduletest': expected='st: module'
 elif command=='lockatomictest': expected='mictest:'
 else: expected=command+':'
 if expected not in text: raise SystemExit('missing VGA command result: '+command)
+if command in ('guiinfo','drawtest','fonttest','canvastest','desktest','shellgui') and 'fallback reported' in text: raise SystemExit('GUI framebuffer fallback: '+command)
 PY
 done
 [ -s "$vga" ] || { printf 'empty VGA dump\n' >&2; exit 1; }
