@@ -72,7 +72,19 @@
 | 56 | init adoption 与有界父进程重挂接 | 稳定 |
 | 57 | 进程退出资源清理账本 | 稳定 |
 | 58 | 有界多子进程 waitpid 选择 | 稳定 |
-| 59 | fork → exec → exit 完整元数据生命周期 | 学习中 |
+| 59 | fork → exec → exit 完整元数据生命周期 | 稳定 |
+| 60 | 受控用户空间 job/session 模型 | 稳定 |
+| GUI-01 | Multiboot2 framebuffer 与像素绘制 | 计划 |
+| GUI-02 | 固定字体、画布与基本绘图 | 计划 |
+| GUI-03 | 键盘/鼠标输入设备层 | 计划 |
+| GUI-04 | 窗口、控件与事件分发 | 计划 |
+| GUI-05 | 桌面 compositor 与窗口管理器 | 计划 |
+| GUI-06 | 图形 shell 与系统状态面板 | 计划 |
+| GUI-07 | 图形桌面综合验证 checkpoint | 计划 |
+| 61–80 | 进程组、session、job control、调度与 COW | 计划 |
+| 81–105 | VFS、设备、epoll 与服务管理 | 计划 |
+| 106–130 | 并发、SMP、RCU 与诊断 | 计划 |
+| 131–155 | 网络、namespace、cgroup 与安全基础 | 计划 |
 
 Lesson 40 对照 Linux `fs/exec.c` 与 `fs/binfmt_elf.c`。Lesson 41 对照 Linux `mm/mmap.c`、`mm/memory.c` 与 `include/linux/mm.h`，仅实现固定元数据、模拟 fault 分类和有界页记账，不执行不安全真实 fault。Lesson 42 对照 Linux `include/linux/uaccess.h`、`mm/usercopy.c` 与 `arch/x86/include/asm/uaccess.h`，仅验证 canonical/range/overflow/VMA 权限并模拟有界 copy，绝不解引用任意用户指针。
 
@@ -86,3 +98,5 @@ make run        # QEMU TCG，VGA 交互验证
 ```
 
 每课 README 含完整的构建/静态检查/QEMU 验证步骤与调试地图。
+
+图形界面阶段参考 LVGL/uGUI 的显示驱动、输入设备、控件树和脏区域分层思想，但 TinyOS 保持 freestanding、无 libc、固定容量和确定性构建，不引入宿主 GUI 库或网络依赖。图形输出使用受控 Multiboot2 framebuffer，VGA 文本仍是验证标记的权威诊断通道。
