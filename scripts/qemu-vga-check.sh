@@ -34,13 +34,14 @@ for command in "$@"; do
   done
   send_key ret; sleep .5
   monitor_cmd "pmemsave 0xb8000 4000 $vga"
-  python3 - "$vga" "$command" <<'PY'
+  python3 - "$vga" "$command" "$run_dir/vga-all.txt" <<'PY'
 import pathlib, sys
 raw=pathlib.Path(sys.argv[1]).read_bytes()
 text=''.join(chr(raw[i]) if 32 <= raw[i] < 127 else ' ' for i in range(0, len(raw)-1, 2)).replace('\x00',' ')
 pathlib.Path(sys.argv[1]+'.txt').write_text(text)
+pathlib.Path(sys.argv[3]).write_text(pathlib.Path(sys.argv[3]).read_text() + text if pathlib.Path(sys.argv[3]).exists() else text)
 command=sys.argv[2]
-expected='shellrun:' if command in ('shellrun','execpath') else ('init pid/ready' if command=='initinfo' else 'st: module' if command=='moduletest' else ('mictest:' if command=='lockatomictest' else command+':'))
+expected='shellrun:' if command in ('shellrun','execpath') else ('init pid/ready' if command=='initinfo' else 'wait block/' if command=='waitblockinfo' else ('timertest:' if command=='timertest' else ('st: module' if command=='moduletest' else ('mictest:' if command=='lockatomictest' else command+':'))))
 if expected not in text: raise SystemExit('missing VGA command result: '+command)
 PY
 done
