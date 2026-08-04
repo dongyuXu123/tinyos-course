@@ -1,0 +1,1 @@
+command=drawtest bytes=4096 nonzero=0 checksum=00000000

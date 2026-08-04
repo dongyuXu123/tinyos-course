@@ -34,7 +34,7 @@ for command in "$@"; do
   done
   send_key ret; sleep .5
   monitor_cmd "pmemsave 0xb8000 4000 $vga"
-  if [ "$command" = guiinfo ] || [ "$command" = drawtest ] || [ "$command" = fonttest ] || [ "$command" = canvastest ]; then
+  if [ "$command" = guiinfo ] || [ "$command" = drawtest ] || [ "$command" = fonttest ] || [ "$command" = canvastest ] || [ "$command" = desktest ] || [ "$command" = shellgui ]; then
     monitor_cmd "pmemsave 0x20000000 4096 $run_dir/framebuffer.bin"
     python3 - "$run_dir/framebuffer.bin" "$command" <<'PY'
 import pathlib, sys
