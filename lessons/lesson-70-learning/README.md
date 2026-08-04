@@ -1,7 +1,10 @@
-# Lesson 70: scheduling and copy-on-write
+# Lesson 70: 前台进程组切换与停止组保护
 
 > **Course status: learning checkpoint.**
 
-This checkpoint models bounded scheduling and copy-on-write metadata with deterministic validation while preserving freestanding operation, fixed capacities, and existing safety invariants.
+Foreground process-group transitions extend session metadata with bounded terminal handoff, stopped-group protection, and deterministic foreground selection.
 
-Commands: `l70test`, plus inherited process, GUI, and subsystem regressions. Session invariants remain preserved.
+Commands: `fgtest`, `sessiontest`, `pgtest`, plus the GUI regressions.
+
+主要内容：前台进程组切换与停止组保护
+统一课程编号：Lesson 70

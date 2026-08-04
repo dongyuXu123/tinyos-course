@@ -1,7 +1,10 @@
-# Lesson 74: scheduling and copy-on-write
+# Lesson 74: job-control 信号路由
 
-> **Course status: learning checkpoint.**
+> **Course status: stable snapshot.**
 
-This checkpoint models bounded scheduling and copy-on-write metadata with deterministic validation while preserving freestanding operation, fixed capacities, and existing safety invariants.
+This checkpoint models bounded job-control signal routing while preserving process-group, session, terminal, and orphan reparenting invariants.
 
-Commands: `l74test`, plus inherited process, GUI, and subsystem regressions. Session invariants remain preserved.
+Commands: `job67test`, plus inherited process, GUI, and job-control regressions.
+
+主要内容：job-control 信号路由
+统一课程编号：Lesson 74

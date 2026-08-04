@@ -1,7 +1,10 @@
-# Lesson 133: networking, namespaces, cgroups, and security
+# Lesson 133: 异常路径与故障分类
 
-> **Course status: learning checkpoint.**
+> **Course status: stable snapshot.**
 
-This checkpoint models bounded networking, namespaces, cgroups, and security metadata with deterministic validation while preserving freestanding operation, fixed capacities, and existing safety invariants.
+This checkpoint models bounded concurrency, SMP, RCU, and diagnostics metadata with deterministic validation while preserving freestanding operation, fixed capacities, and existing safety invariants.
 
-Commands: `l133test`, plus inherited process, GUI, and subsystem regressions. Session invariants remain preserved.
+Commands: `l126test`, plus inherited process, GUI, and subsystem regressions. Session invariants remain preserved.
+
+主要内容：异常路径与故障分类
+统一课程编号：Lesson 133

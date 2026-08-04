@@ -1,7 +1,10 @@
-# Lesson 83: VFS, devices, epoll, and service management
+# Lesson 83: COW 写时复制缺页统计
 
-> **Course status: learning checkpoint.**
+> **Course status: stable snapshot.**
 
-This checkpoint models bounded VFS, devices, epoll, and service management metadata with deterministic validation while preserving freestanding operation, fixed capacities, and existing safety invariants.
+This checkpoint models bounded scheduling and copy-on-write metadata with deterministic validation while preserving freestanding operation, fixed capacities, and existing safety invariants.
 
-Commands: `l83test`, plus inherited process, GUI, and subsystem regressions. Session invariants remain preserved.
+Commands: `l76test`, plus inherited process, GUI, and subsystem regressions. Session invariants remain preserved.
+
+主要内容：COW 写时复制缺页统计
+统一课程编号：Lesson 83

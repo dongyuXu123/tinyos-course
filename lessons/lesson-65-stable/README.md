@@ -1,7 +1,10 @@
-# Lesson 65: bounded process and scheduler metadata
+# Lesson 65: 桌面 compositor 与窗口管理器
 
-> **Course status: learning checkpoint.**
+> **Course status: stable snapshot.**
 
-This checkpoint models Lesson 65 process-group, scheduler, or copy-on-write metadata with fixed capacity and deterministic validation.
+A bounded compositor draws a desktop background, title bars, taskbar, cursor, and fixed windows while preserving framebuffer ownership and dirty-region accounting.
 
-Commands: `l65test`, plus inherited regressions.
+Commands: `desktest`, plus `windowtest`, `inputtest`, `fonttest`, `canvastest`, `guiinfo`, `drawtest`, and Lesson 60 regressions.
+
+主要内容：桌面 compositor 与窗口管理器
+统一课程编号：Lesson 65

@@ -1,7 +1,10 @@
-# Lesson 63: Foreground process-group transitions
+# Lesson 63: 键盘/鼠标输入事件队列
 
 > **Course status: learning checkpoint.**
 
-Foreground process-group transitions extend session metadata with bounded terminal handoff, stopped-group protection, and deterministic foreground selection.
+A bounded input event queue models keyboard, mouse, and timer events without dynamic allocation. PS/2 scan-code conversion and three-byte mouse packet metadata remain deterministic and safely report unavailable devices.
 
-Commands: `fgtest`, `sessiontest`, `pgtest`, plus the GUI regressions.
+Commands: `inputtest`, plus `fonttest`, `canvastest`, `guiinfo`, `drawtest`, and Lesson 60 regressions.
+
+主要内容：键盘/鼠标输入事件队列
+统一课程编号：Lesson 63

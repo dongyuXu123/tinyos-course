@@ -74,17 +74,108 @@
 | 58 | 有界多子进程 waitpid 选择 | 稳定 |
 | 59 | fork → exec → exit 完整元数据生命周期 | 稳定 |
 | 60 | 受控用户空间 job/session 模型 | 稳定 |
-| GUI-01 | Multiboot2 framebuffer 与像素绘制 | 计划 |
-| GUI-02 | 固定字体、画布与基本绘图 | 计划 |
-| GUI-03 | 键盘/鼠标输入设备层 | 计划 |
-| GUI-04 | 窗口、控件与事件分发 | 计划 |
-| GUI-05 | 桌面 compositor 与窗口管理器 | 计划 |
-| GUI-06 | 图形 shell 与系统状态面板 | 计划 |
-| GUI-07 | 图形桌面综合验证 checkpoint | 计划 |
-| 61–80 | 进程组、session、job control、调度与 COW | 计划 |
-| 81–105 | VFS、设备、epoll 与服务管理 | 计划 |
-| 106–130 | 并发、SMP、RCU 与诊断 | 计划 |
-| 131–155 | 网络、namespace、cgroup 与安全基础 | 计划 |
+| 61 | Multiboot2 framebuffer 与像素绘制 | 已完成 |
+| 62 | 固定 bitmap 字体、canvas 与基本绘图 | 已完成 |
+| 63 | 键盘/鼠标输入事件队列 | 已完成 |
+| 64 | 窗口、widget 与事件分发 | 已完成 |
+| 65 | 桌面 compositor 与窗口管理器 | 已完成 |
+| 66 | 图形 shell 与系统状态面板 | 已完成 |
+| 67 | 图形桌面综合验证 | 已完成 |
+| 68 | 进程组与 session 元数据 | 已完成 |
+| 69 | session 首领与控制终端所有权 | 已完成 |
+| 70 | 前台进程组切换与停止组保护 | 已完成 |
+| 71 | 进程组/调度/COW 元数据 checkpoint | 已完成 |
+| 72 | 进程元数据 checkpoint | 已完成 |
+| 73 | 孤儿进程组检测与安全 reparent | 已完成 |
+| 74 | job-control 信号路由 | 已完成 |
+| 75 | 终端 stop/continue 状态转换 | 已完成 |
+| 76 | 调度策略元数据 | 已完成 |
+| 77 | priority/nice 优先级状态 | 已完成 |
+| 78 | runqueue 运行队列统计 | 已完成 |
+| 79 | voluntary preemption 主动抢占 | 已完成 |
+| 80 | 定时器驱动调度 | 已完成 |
+| 81 | context switch 上下文切换元数据 | 已完成 |
+| 82 | Copy-on-Write 基础元数据 | 已完成 |
+| 83 | COW 写时复制缺页统计 | 已完成 |
+| 84 | 共享页生命周期 | 已完成 |
+| 85 | fork 内存屏障与一致性 | 已完成 |
+| 86 | 调度公平性验证 | 已完成 |
+| 87 | 负载均衡与进程组调度综合 checkpoint | 已完成 |
+| 88 | VFS 层次与 mount 元数据 | 已完成 |
+| 89 | 超级块与文件系统注册 | 已完成 |
+| 90 | inode 生命周期与引用 | 已完成 |
+| 91 | dentry 缓存与路径组件 | 已完成 |
+| 92 | 路径解析与遍历边界 | 已完成 |
+| 93 | mount namespace 元数据 | 已完成 |
+| 94 | 文件权限与访问检查 | 已完成 |
+| 95 | 文件打开与 file_operations | 已完成 |
+| 96 | 文件偏移与引用计数 | 已完成 |
+| 97 | 目录读取与固定缓冲区 | 已完成 |
+| 98 | 字符设备注册 | 已完成 |
+| 99 | 设备节点与 major/minor | 已完成 |
+| 100 | 设备打开与 ioctl 元数据 | 已完成 |
+| 101 | 块设备请求队列 | 已完成 |
+| 102 | 设备生命周期与卸载 | 已完成 |
+| 103 | poll 就绪队列 | 已完成 |
+| 104 | epoll 实例与固定 watch 表 | 已完成 |
+| 105 | epoll 边沿触发 | 已完成 |
+| 106 | epoll 水平触发 | 已完成 |
+| 107 | epoll wait/wake 集成 | 已完成 |
+| 108 | 服务状态机 | 已完成 |
+| 109 | 服务依赖拓扑 | 已完成 |
+| 110 | 服务启动与失败回滚 | 已完成 |
+| 111 | 守护进程生命周期 | 已完成 |
+| 112 | VFS/设备/epoll/服务综合验证 | 已完成 |
+| 113 | mutex 与 spinlock 竞争 | 已完成 |
+| 114 | 原子操作与内存序 | 已完成 |
+| 115 | 信号量与等待队列并发 | 已完成 |
+| 116 | per-CPU 数据访问 | 已完成 |
+| 117 | 竞态窗口与屏障 | 已完成 |
+| 118 | SMP CPU 状态 | 已完成 |
+| 119 | SMP 启动元数据 | 已完成 |
+| 120 | 跨 CPU 唤醒 | 已完成 |
+| 121 | per-CPU runqueue | 已完成 |
+| 122 | SMP 负载均衡 | 已完成 |
+| 123 | RCU reader 临界区 | 已完成 |
+| 124 | RCU grace period | 已完成 |
+| 125 | RCU callback 队列 | 已完成 |
+| 126 | RCU 对象回收 | 已完成 |
+| 127 | RCU 与调度集成 | 已完成 |
+| 128 | tracing ring buffer | 已完成 |
+| 129 | 事件过滤与采样 | 已完成 |
+| 130 | 锁依赖图 | 已完成 |
+| 131 | 死锁检测元数据 | 已完成 |
+| 132 | 崩溃诊断快照 | 已完成 |
+| 133 | 异常路径与故障分类 | 已完成 |
+| 134 | 内存压力诊断 | 已完成 |
+| 135 | 调度与并发综合诊断 | 已完成 |
+| 136 | SMP/RCU 回归验证 | 已完成 |
+| 137 | 并发、SMP、RCU、诊断综合 checkpoint | 已完成 |
+| 138 | 网络 buffer pool | 已完成 |
+| 139 | 网络接口与链路状态 | 已完成 |
+| 140 | 收发队列与包记账 | 已完成 |
+| 141 | loopback 接口 | 已完成 |
+| 142 | IPv4 地址元数据 | 已完成 |
+| 143 | UDP socket 状态 | 已完成 |
+| 144 | socket 端口分配 | 已完成 |
+| 145 | 连接状态机 | 已完成 |
+| 146 | socket poll/epoll 集成 | 已完成 |
+| 147 | 网络错误与超时 | 已完成 |
+| 148 | 进程 namespace | 已完成 |
+| 149 | mount namespace 隔离 | 已完成 |
+| 150 | network namespace | 已完成 |
+| 151 | PID namespace | 已完成 |
+| 152 | user namespace | 已完成 |
+| 153 | cgroup 层级 | 已完成 |
+| 154 | cgroup CPU 统计 | 已完成 |
+| 155 | cgroup 内存限制 | 已完成 |
+| 156 | cgroup 设备策略 | 已完成 |
+| 157 | 资源限制与回收 | 已完成 |
+| 158 | capability 权限检查 | 已完成 |
+| 159 | syscall 安全边界 | 已完成 |
+| 160 | 审计事件缓冲区 | 已完成 |
+| 161 | 安全策略决策 | 已完成 |
+| 162 | 网络、namespace、cgroup、安全综合 checkpoint | 已完成 |
 
 Lesson 40 对照 Linux `fs/exec.c` 与 `fs/binfmt_elf.c`。Lesson 41 对照 Linux `mm/mmap.c`、`mm/memory.c` 与 `include/linux/mm.h`，仅实现固定元数据、模拟 fault 分类和有界页记账，不执行不安全真实 fault。Lesson 42 对照 Linux `include/linux/uaccess.h`、`mm/usercopy.c` 与 `arch/x86/include/asm/uaccess.h`，仅验证 canonical/range/overflow/VMA 权限并模拟有界 copy，绝不解引用任意用户指针。
 
@@ -100,3 +191,6 @@ make run        # QEMU TCG，VGA 交互验证
 每课 README 含完整的构建/静态检查/QEMU 验证步骤与调试地图。
 
 图形界面阶段参考 LVGL/uGUI 的显示驱动、输入设备、控件树和脏区域分层思想，但 TinyOS 保持 freestanding、无 libc、固定容量和确定性构建，不引入宿主 GUI 库或网络依赖。图形输出使用受控 Multiboot2 framebuffer，VGA 文本仍是验证标记的权威诊断通道。
+
+
+统一课程清单见 [COURSE-MANIFEST.md](COURSE-MANIFEST.md)。GUI 不再使用独立课号；GUI 架构说明保留在 Lesson 61～67。

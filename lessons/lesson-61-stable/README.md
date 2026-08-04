@@ -1,7 +1,10 @@
-# Lesson 61: Process groups and session metadata
+# Lesson 61: Multiboot2 framebuffer 与像素绘制
 
-> **Course status: learning checkpoint.**
+> **Course status: stable snapshot (validated; verified build artifacts included).**
 
-The first post-desktop kernel lesson adds bounded process-group and session metadata to the existing job-control model. Group membership, leaders, controlling-session identity, and validation remain deterministic and do not execute arbitrary user code.
+The first graphical checkpoint adds a bounded Multiboot2 framebuffer handoff and deterministic pixel/rectangle drawing while retaining VGA text diagnostics. Unsupported formats fall back safely instead of writing unknown memory.
 
-Commands: `pginfo`, `pgtest`, plus the GUI and Lesson 60 regressions.
+Commands: `guiinfo`, `drawtest`, plus the Lesson 60 process/session regressions.
+
+主要内容：Multiboot2 framebuffer 与像素绘制
+统一课程编号：Lesson 61

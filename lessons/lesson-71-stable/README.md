@@ -1,7 +1,10 @@
-# Lesson 71: scheduling and copy-on-write
+# Lesson 71: 进程组/调度/COW 元数据 checkpoint
 
-> **Course status: learning checkpoint.**
+> **Course status: stable snapshot.**
 
-This checkpoint models bounded scheduling and copy-on-write metadata with deterministic validation while preserving freestanding operation, fixed capacities, and existing safety invariants.
+This checkpoint models Lesson 64 process-group, scheduler, or copy-on-write metadata with fixed capacity and deterministic validation, preserving freestanding operation and existing safety boundaries.
 
-Commands: `l71test`, plus inherited process, GUI, and subsystem regressions. Session invariants remain preserved.
+Commands: `l64test`, plus inherited GUI, job-control, and process regressions.
+
+主要内容：进程组/调度/COW 元数据 checkpoint
+统一课程编号：Lesson 71

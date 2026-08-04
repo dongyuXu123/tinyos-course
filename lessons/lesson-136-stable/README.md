@@ -1,7 +1,10 @@
-# Lesson 136: networking, namespaces, cgroups, and security
+# Lesson 136: SMP/RCU 回归验证
 
-> **Course status: learning checkpoint.**
+> **Course status: stable snapshot.**
 
-This checkpoint models bounded networking, namespaces, cgroups, and security metadata with deterministic validation while preserving freestanding operation, fixed capacities, and existing safety invariants.
+This checkpoint models bounded concurrency, SMP, RCU, and diagnostics metadata with deterministic validation while preserving freestanding operation, fixed capacities, and existing safety invariants.
 
-Commands: `l136test`, plus inherited process, GUI, and subsystem regressions. Session invariants remain preserved.
+Commands: `l129test`, plus inherited process, GUI, and subsystem regressions. Session invariants remain preserved.
+
+主要内容：SMP/RCU 回归验证
+统一课程编号：Lesson 136

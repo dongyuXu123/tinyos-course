@@ -32,9 +32,9 @@ $(BUILD)/kernel.iso: $(ISO_ROOT)/boot/kernel.elf $(ISO_ROOT)/boot/grub/grub.cfg
 	grub-mkrescue -o $@ $(ISO_ROOT)
 check: $(BUILD)/kernel.elf
 	grub-file --is-x86-multiboot2 $(BUILD)/kernel.elf
-	@grep -q 'scheduling and copy-on-write' README.md
-	@grep -q 'l69test' kernel64.c
-	@grep -q 'Session' README.md
+	@grep -q 'session 首领与控制终端所有权' README.md
+	@grep -q 'sessiontest' kernel64.c
+	@grep -q 'Lesson 69' README.md
 	@printf '%s\n' 'Multiboot2 and Lesson 69 checks passed.'
 run: $(BUILD)/kernel.iso
 	qemu-system-x86_64 -accel tcg -boot order=d -cdrom $(BUILD)/kernel.iso -serial stdio -no-reboot -no-shutdown

@@ -1,7 +1,10 @@
-# Lesson 107: concurrency, SMP, RCU, and diagnostics
+# Lesson 107: epoll wait/wake 集成
 
 > **Course status: learning checkpoint.**
 
-This checkpoint models bounded concurrency, SMP, RCU, and diagnostics metadata with deterministic validation while preserving freestanding operation, fixed capacities, and existing safety invariants.
+This checkpoint models bounded VFS, devices, epoll, and service management metadata with deterministic validation while preserving freestanding operation, fixed capacities, and existing safety invariants.
 
-Commands: `l107test`, plus inherited process, GUI, and subsystem regressions. Session invariants remain preserved.
+Commands: `l100test`, plus inherited process, GUI, and subsystem regressions. Session invariants remain preserved.
+
+主要内容：epoll wait/wake 集成
+统一课程编号：Lesson 107

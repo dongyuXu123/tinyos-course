@@ -1,7 +1,10 @@
-# Lesson 64: bounded process and scheduler metadata
+# Lesson 64: 窗口、widget 与事件分发
 
-> **Course status: learning checkpoint.**
+> **Course status: stable snapshot.**
 
-This checkpoint models Lesson 64 process-group, scheduler, or copy-on-write metadata with fixed capacity and deterministic validation, preserving freestanding operation and existing safety boundaries.
+A fixed window and widget table provides bounded z-order, focus, hit testing, and event dispatch. No dynamic allocation or arbitrary application callbacks are used.
 
-Commands: `l64test`, plus inherited GUI, job-control, and process regressions.
+Commands: `windowtest`, plus `inputtest`, `fonttest`, `canvastest`, `guiinfo`, `drawtest`, and Lesson 60 regressions.
+
+主要内容：窗口、widget 与事件分发
+统一课程编号：Lesson 64

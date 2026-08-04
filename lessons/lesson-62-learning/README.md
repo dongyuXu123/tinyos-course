@@ -1,7 +1,10 @@
-# Lesson 62: Session leadership and controlling terminal
+# Lesson 62: 固定 bitmap 字体、canvas 与基本绘图
 
 > **Course status: learning checkpoint.**
 
-Session leadership and controlling-terminal acquisition extend the bounded process-group model. The lesson validates leader-only session creation and deterministic terminal ownership without arbitrary user pointers or code execution.
+A bounded 5x7 bitmap font, clipped text drawing, canvas colors, and dirty-region accounting build on GUI-01 framebuffer primitives without external font files or dynamic memory.
 
-Commands: `sessiontest`, `sessioninfo`, `pgtest`, plus the GUI regressions.
+Commands: `fonttest`, `canvastest`, plus `guiinfo`, `drawtest`, and Lesson 60 regressions.
+
+主要内容：固定 bitmap 字体、canvas 与基本绘图
+统一课程编号：Lesson 62

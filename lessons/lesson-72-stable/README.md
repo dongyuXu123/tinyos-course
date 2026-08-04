@@ -1,7 +1,10 @@
-# Lesson 72: scheduling and copy-on-write
+# Lesson 72: 进程元数据 checkpoint
 
-> **Course status: learning checkpoint.**
+> **Course status: stable snapshot.**
 
-This checkpoint models bounded scheduling and copy-on-write metadata with deterministic validation while preserving freestanding operation, fixed capacities, and existing safety invariants.
+This checkpoint models Lesson 65 process-group, scheduler, or copy-on-write metadata with fixed capacity and deterministic validation.
 
-Commands: `l72test`, plus inherited process, GUI, and subsystem regressions. Session invariants remain preserved.
+Commands: `l65test`, plus inherited regressions.
+
+主要内容：进程元数据 checkpoint
+统一课程编号：Lesson 72

@@ -32,9 +32,9 @@ $(BUILD)/kernel.iso: $(ISO_ROOT)/boot/kernel.elf $(ISO_ROOT)/boot/grub/grub.cfg
 	grub-mkrescue -o $@ $(ISO_ROOT)
 check: $(BUILD)/kernel.elf
 	grub-file --is-x86-multiboot2 $(BUILD)/kernel.elf
-	@grep -q 'networking, namespaces, cgroups, and security' README.md
+	@grep -q '网络 buffer pool' README.md
 	@grep -q 'l138test' kernel64.c
-	@grep -q 'Session' README.md
+	@grep -q 'Lesson 138' README.md
 	@printf '%s\n' 'Multiboot2 and Lesson 138 checks passed.'
 run: $(BUILD)/kernel.iso
 	qemu-system-x86_64 -accel tcg -boot order=d -cdrom $(BUILD)/kernel.iso -serial stdio -no-reboot -no-shutdown

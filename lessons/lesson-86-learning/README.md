@@ -1,7 +1,10 @@
-# Lesson 86: VFS, devices, epoll, and service management
+# Lesson 86: 调度公平性验证
 
 > **Course status: learning checkpoint.**
 
-This checkpoint models bounded VFS, devices, epoll, and service management metadata with deterministic validation while preserving freestanding operation, fixed capacities, and existing safety invariants.
+This checkpoint models bounded scheduling and copy-on-write metadata with deterministic validation while preserving freestanding operation, fixed capacities, and existing safety invariants.
 
-Commands: `l86test`, plus inherited process, GUI, and subsystem regressions. Session invariants remain preserved.
+Commands: `l79test`, plus inherited process, GUI, and subsystem regressions. Session invariants remain preserved.
+
+主要内容：调度公平性验证
+统一课程编号：Lesson 86

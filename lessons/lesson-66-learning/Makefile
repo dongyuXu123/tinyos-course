@@ -32,10 +32,9 @@ $(BUILD)/kernel.iso: $(ISO_ROOT)/boot/kernel.elf $(ISO_ROOT)/boot/grub/grub.cfg
 	grub-mkrescue -o $@ $(ISO_ROOT)
 check: $(BUILD)/kernel.elf
 	grub-file --is-x86-multiboot2 $(BUILD)/kernel.elf
-	@grep -q 'bounded' README.md
-	@grep -q 'orphaned' README.md
-	@grep -q 'orphan66test' kernel64.c
-	@grep -q 'session' README.md
+	@grep -q '图形 shell 与系统状态面板' README.md
+	@grep -q 'gui' README.md
+	@grep -q 'Lesson 66' README.md
 	@printf '%s\n' 'Multiboot2 and Lesson 66 checks passed.'
 run: $(BUILD)/kernel.iso
 	qemu-system-x86_64 -accel tcg -boot order=d -cdrom $(BUILD)/kernel.iso -serial stdio -no-reboot -no-shutdown

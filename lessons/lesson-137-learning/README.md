@@ -1,7 +1,10 @@
-# Lesson 137: networking, namespaces, cgroups, and security
+# Lesson 137: 并发、SMP、RCU、诊断综合 checkpoint
 
 > **Course status: learning checkpoint.**
 
-This checkpoint models bounded networking, namespaces, cgroups, and security metadata with deterministic validation while preserving freestanding operation, fixed capacities, and existing safety invariants.
+This checkpoint models bounded concurrency, SMP, RCU, and diagnostics metadata with deterministic validation while preserving freestanding operation, fixed capacities, and existing safety invariants.
 
-Commands: `l137test`, plus inherited process, GUI, and subsystem regressions. Session invariants remain preserved.
+Commands: `l130test`, plus inherited process, GUI, and subsystem regressions. Session invariants remain preserved.
+
+主要内容：并发、SMP、RCU、诊断综合 checkpoint
+统一课程编号：Lesson 137
