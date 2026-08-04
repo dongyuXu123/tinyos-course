@@ -68,7 +68,7 @@
 | 52 | 综合用户空间：init、shell、文件/进程协同与管道 | 稳定 |
 | 53 | 受控 shell runtime、内置用户镜像与有界命令执行 | 稳定 |
 | 54 | 有界 shell wait、exit status 与 zombie 回收 | 稳定 |
-| 55 | 阻塞 wait/wake 与 WNOHANG | 学习中 |
+| 55 | 阻塞 wait/wake 与 WNOHANG | 稳定 |
 | 56 | init adoption 与有界父进程重挂接 | 稳定 |
 | 57 | 进程退出资源清理账本 | 稳定 |
 | 58 | 有界多子进程 waitpid 选择 | 稳定 |
