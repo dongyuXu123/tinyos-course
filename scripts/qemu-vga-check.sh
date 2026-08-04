@@ -34,6 +34,9 @@ for command in "$@"; do
   done
   send_key ret; sleep .5
   monitor_cmd "pmemsave 0xb8000 4000 $vga"
+  if [ "$command" = guiinfo ] || [ "$command" = drawtest ]; then
+    monitor_cmd "pmemsave 0x20000000 4096 $run_dir/framebuffer.bin"
+  fi
   python3 - "$vga" "$command" "$run_dir/vga-all.txt" <<'PY'
 import pathlib, sys
 raw=pathlib.Path(sys.argv[1]).read_bytes()
