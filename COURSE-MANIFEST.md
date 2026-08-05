@@ -1,14 +1,22 @@
 # TinyOS unified course manifest
 
+本清单是 Lesson 00–162 课程主题、前后关系和阶段边界的索引；根目录 [`README.md`](README.md) 提供完整流程图。课程由 AI 辅助编写并经维护者审阅和验证，验证层次与限制见根 README。
+
+课程现在每节只保留 `lesson-XX-stable/` 一个可学习版本。完全相同的课程采用 stable；存在差异的课程先审阅 learning 实现，再将正确版本提升为 stable，避免沿用 stale stable。Lesson 34–37 的正确进程/任务实现已按此规则提升，Lesson 61、71 也采用审阅后的 learning-derived canonical 内容。stable 保留源码、`build/`、ISO 和启动验证配置。
+
+历史逐课差异由 [`scripts/compare-course-variants.py`](scripts/compare-course-variants.py) 生成，报告见 [`docs/learning-stable-diff-report.md`](docs/learning-stable-diff-report.md)。新下载后的本地验证入口见 [`docs/local-validation.md`](docs/local-validation.md) 和 [`scripts/validate-course.sh`](scripts/validate-course.sh)。
+
+GUI 课程总览与调试经验见 [`docs/gui-debugging-playbook.md`](docs/gui-debugging-playbook.md)。GUI 主线为 Lesson 61–67，Lesson 67 结课，Lesson 68 恢复进程组/session 主线。
+
 | Lesson | Main content | Origin |
 |---:|---|---|
-| 61 | Multiboot2 framebuffer 与像素绘制 | GUI-01 |
-| 62 | 固定 bitmap 字体、canvas 与基本绘图 | GUI-02 |
-| 63 | 键盘/鼠标输入事件队列 | GUI-03 |
-| 64 | 窗口、widget 与事件分发 | GUI-04 |
-| 65 | 桌面 compositor 与窗口管理器 | GUI-05 |
-| 66 | 图形 shell 与系统状态面板 | GUI-06 |
-| 67 | 图形桌面综合验证 | GUI-07 |
+| 61 | 可靠 framebuffer handoff 与图形输出前置 | GUI-01 |
+| 62 | backbuffer、像素格式、bitmap font 与 canvas | GUI-02 |
+| 63 | 键盘、PS/2 AUX 鼠标与输入事件队列 | GUI-03 |
+| 64 | 桌面对象模型与事件分发 | GUI-04 |
+| 65 | scene/compositor 与 Xfce 风格桌面 | GUI-05 |
+| 66 | 图形 Terminal 与安全命令 dispatcher | GUI-06 |
+| 67 | 图形桌面综合验收（GUI 结课） | GUI-07 |
 | 68 | 进程组与 session 元数据 | Lesson 61 |
 | 69 | session 首领与控制终端所有权 | Lesson 62 |
 | 70 | 前台进程组切换与停止组保护 | Lesson 63 |

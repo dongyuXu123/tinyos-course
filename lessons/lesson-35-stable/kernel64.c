@@ -1,4 +1,4 @@
-/* Lesson 34: bounded address spaces over the inherited syscall ABI. */
+/* Lesson 35: bounded CPL3 PIT preemption over the inherited syscall ABI. */
 typedef unsigned char u8; typedef unsigned int u32; typedef unsigned short u16; typedef unsigned long long u64; typedef long long s64;
 #define TEXT64 __attribute__((section(".text64"), noinline))
 #define ENTRY64 __attribute__((section(".text64.entry"), noinline))
@@ -78,9 +78,9 @@ _Static_assert(sizeof(struct exception_frame_ist)==56,"IST frame");
 /* IRQ0 pushes GPRs; CPL3 delivery adds the CPU's rsp/ss pair. */
 struct irq0_frame { u64 r15,r14,r13,r12,r11,r10,r9,r8,rdi,rsi,rbp,rdx,rcx,rbx,rax,rip,cs,rflags,rsp,ss; };
 struct syscall_frame { u64 r15,r14,r13,r12,r11,r10,r9,r8,rdi,rsi,rbp,rdx,rcx,rbx,rax,rip,cs,rflags,rsp,ss; };
-/* Lesson 34 keeps one bounded process object and one user thread.  The
- * process owns the inherited image/address space; the thread owns the saved
- * user return context.  This is metadata only: no user scheduling or IRQs. */
+/* Lesson 35 keeps one bounded process object and one user thread. The
+ * thread owns the validated CPL3 IRQ0 return context; no user IRQ callback
+ * or second user address space is permitted. */
 enum process_state { PROCESS_EMPTY, PROCESS_READY, PROCESS_RUNNING, PROCESS_EXITED };
 enum user_thread_state { USER_THREAD_EMPTY, USER_THREAD_READY, USER_THREAD_RUNNING, USER_THREAD_EXITED };
 struct saved_user_context { struct syscall_frame frame; u64 saves, last_syscall, last_result, pit_preemptions, pit_resumes; u8 valid; };

@@ -5,8 +5,10 @@
 .set MB2_HEADER_LENGTH, mb2_header_end - mb2_header
 .set MB2_CHECKSUM, -(MB2_HEADER_MAGIC + MB2_ARCHITECTURE_I386 + MB2_HEADER_LENGTH)
 .set MB2_HEADER_TAG_INFO_REQUEST, 1
+.set MB2_HEADER_TAG_GRAPHICS, 5
 .set MB2_BOOT_TAG_MMAP, 6
 	.set MB2_BOOT_TAG_FRAMEBUFFER, 8
+	.set MB2_TAG_FRAMEBUFFER, 5
 .set IA32_EFER, 0xc0000080
 .set EFER_LME, 0x00000100
 .set CR4_PAE, 0x00000020
@@ -26,6 +28,12 @@ mb2_header:
     .long 16
     .long MB2_BOOT_TAG_MMAP
     .long MB2_BOOT_TAG_FRAMEBUFFER
+    .short MB2_HEADER_TAG_GRAPHICS
+    .short 0
+    .long 20
+    .long 800
+    .long 600
+    .long 32
     .align 8
     .short 0
     .short 0

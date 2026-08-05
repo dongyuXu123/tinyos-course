@@ -32,11 +32,11 @@ $(BUILD)/kernel.iso: $(ISO_ROOT)/boot/kernel.elf $(ISO_ROOT)/boot/grub/grub.cfg
 	grub-mkrescue -o $@ $(ISO_ROOT)
 check: $(BUILD)/kernel.elf
 	grub-file --is-x86-multiboot2 $(BUILD)/kernel.elf
-	@grep -q '键盘/鼠标输入事件队列' README.md
+	@grep -q '键盘、PS/2 AUX 鼠标与输入事件队列' README.md
 	@grep -q 'gui' README.md
 	@grep -q 'Lesson 63' README.md
 	@printf '%s\n' 'Multiboot2 and Lesson 63 checks passed.'
 run: $(BUILD)/kernel.iso
-	qemu-system-x86_64 -accel tcg -boot order=d -cdrom $(BUILD)/kernel.iso -serial stdio -no-reboot -no-shutdown
+	qemu-system-x86_64 -accel tcg -vga std -boot order=d -cdrom $(BUILD)/kernel.iso -serial stdio -no-reboot -no-shutdown
 clean:
 	rm -rf $(BUILD)

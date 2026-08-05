@@ -1,7 +1,8 @@
 SECTIONS
 {
     /* Raw continuation VMA is zero; bootstrap executes it through high alias. */
-    . = 0;
+    /* Link at the high alias used by the long-mode bootstrap. */
+    . = 0xffffffff80102000;
     .text64 : { *(.text64.entry) *(.text64 .text64.*) }
     .rodata : { *(.rodata .rodata.*) }
     .data : {

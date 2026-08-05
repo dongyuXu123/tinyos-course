@@ -23,7 +23,7 @@ typedef unsigned char u8; typedef unsigned int u32; typedef unsigned short u16; 
 #define PIT_CHANNEL0 0x40
 #define PIT_RATE_HZ 100
 #define PIT_DIVISOR 11932
-#define PAGE_TABLES_PER_ALIAS 8U
+#define PAGE_TABLES_PER_ALIAS (IDENTITY_MAP_END/(PAGE_ENTRIES*PAGE_SIZE))
 #define VM_REGION_START 0x00ff0000ULL
 #define VM_REGION_SLOTS 16U
 #define VM_REGION_END (VM_REGION_START+VM_REGION_SLOTS*PAGE_SIZE)

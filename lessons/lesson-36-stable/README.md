@@ -1,10 +1,12 @@
 # Lesson 36: 有界多用户程序运行时与退出回收
 
-> **Course status: learning implementation; no stable snapshot.**
+> **Course status: stable snapshot (validated; canonical learning implementation promoted).**
 
-Lesson 35 extends the validated embedded user image and bounded process/thread objects from Lesson 34. IRQ0 now distinguishes a CPL3-origin frame by its `CS` selector. For the single user thread, the scheduler copies and validates the complete privilege-return frame (`RIP`, `CS`, `RFLAGS`, `RSP`, `SS`, and all GPRs) into the thread context, then restores that exact context through the one `iretq` path.
+Lesson 36 completes the bounded user-program microkernel stage. Two fixed user program descriptors are created at boot. Each has its own process object, address-space object, user thread object, code page, stack page, PID, entry, and saved CPL3 context metadata. The objects are bounded arrays of length two; there is no dynamic process creation, fork, arbitrary image loading, or unbounded scheduler.
 
-The PIT remains bounded at 100 Hz. A user-origin IRQ0 is acknowledged, records one preemption and one resume, and returns to the same validated user thread; it never dispatches an unsafe user IRQ callback or switches to another user address space. The saved `RFLAGS` preserves the user IF policy (the demo enters with IF clear), and invalid selectors or ranges are not accepted as a valid context. `processinfo` reports PIT user preempt/resume counters.
+The inherited syscall ABI remains unchanged (`GETTICKS`, `GETPID`, `WRITE_CONSOLE`, `EXIT`, unknown `-ENOSYS`). IRQ0 recognizes a CPL3 frame by `CS`, acknowledges PIT, copies all GPRs plus `RIP/CS/RFLAGS/RSP/SS` into the active thread context, validates the return range, and restores the exact frame through one `iretq` path. The user IF policy remains disabled; no user IRQ callback or cross-address-space scheduling is introduced.
+
+Lifecycle accounting covers READY → RUNNING → EXITED and bounded reclaim to EMPTY, with exit/reclaim counters shown by `processinfo`. PMM reserves and owns both embedded code/stack pairs and refuses to free owned frames.
 
 ## Validation
 
@@ -13,4 +15,4 @@ make clean && make -j"$(nproc)"
 make check
 ```
 
-From a fresh QEMU boot, run `processtest`, `cpl3test`, and `processinfo`. Run `syscallinfo` and `threadinfo` to confirm the inherited ABI, PIT rate, and scheduler policy. The banner, `about`, and `help` text identify Lesson 35 and the bounded CPL3 IRQ0 save/restore boundary.
+From a fresh QEMU boot, run `processtest` to check both process/address-space/thread objects, then `processinfo` to inspect both-program bounds and exit/reclaim counters. Run `userpitest` or `cpl3test` to verify the safe CPL3 IRQ0 frame path and unchanged syscall ABI. The banner, `about`, and `help` text identify Lesson 36.

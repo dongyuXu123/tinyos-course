@@ -1,7 +1,6 @@
 # Lesson 41: bounded VMA and demand page-fault model
 
-> **Course status: stable snapshot (validated; verified build artifacts included).**
-
+> **Course status: stable snapshot (validated; canonical learning implementation promoted).**
 Lesson 41 adds a fixed Linux-style virtual-memory-area table and a safe demand-fault teaching model while preserving real exception behavior. Each VMA records bounded start/end, protection, and file/anonymous backing metadata. Lookup and range checks classify simulated accesses as not-present, protection, or unmapped; only a bounded number of PMM-backed pages can be inserted and accounted. No command executes an unsafe memory fault.
 
 ## Commands and tests

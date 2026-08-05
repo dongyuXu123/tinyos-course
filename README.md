@@ -1,13 +1,95 @@
 # TinyOS 从零操作系统课程
 
-从零开始、逐课增量构建的一个教学操作系统。每课包含可编辑的学习版
-`lesson-XX-learning/` 与只读的稳定快照 `lesson-XX-stable/`。
+从零开始、逐课增量构建的一个教学操作系统。每课只发布一个可直接学习和验证的稳定目录
+`lesson-XX-stable/`；历史 learning 版本已经审阅并合并到 canonical stable 后移除。
 
 - 引导：GRUB + Multiboot2（i386 交接 ABI），随后在 TinyOS 内部进入 x86_64 long mode。
 - 汇编：AT&T 语法。
 - 运行时约束：无 libc（无 `printf`/`malloc`/`memcpy`/`memset`）。
 - 验证：每课都在 QEMU VGA 上可见验证，不以串口为准。
 - 规范权威：Intel SDM、Multiboot2 规范、GNU GRUB；Linux 内核源码仅作工程对照。
+- GUI 调试经验：[`docs/gui-debugging-playbook.md`](docs/gui-debugging-playbook.md)，覆盖 Lesson 61–67 的 framebuffer、绘图、鼠标、compositor、Terminal 和 QEMU 验收。
+
+## AI 编写与验证声明
+
+本课程的内核代码、课程说明、验证脚本和部分调试文档由 AI 辅助编写，并由维护者审阅、整理和验收。当前仓库已对 Lesson 01–162 的 learning/stable 变体执行逐课结构检查、build、`make check` 和 QEMU 启动冒烟验证；Lesson 61–67 还进行了图形输出、键盘和 PS/2 鼠标的专项验收。自动化模型测试可以证明确定性状态机和边界条件，但不等同于每一种 GUI 视觉、鼠标轨迹或真实硬件场景的人工验收。
+
+## 单一 stable 课程版本
+
+课程整理后每节课只发布一个目录：`lessons/lesson-XX-stable/`。这样学习者不需要在 learning/stable 之间选择，也能直接使用随源码发布的稳定构建产物和验证配置。
+
+- 已确认完全相同的课程统一采用 stable 内容；
+- 有差异的课程先审阅 learning 实现，再将正确实现提升为 stable，不能直接沿用过时的 stable 快照；
+- Lesson 34–37 使用已审阅的 learning-derived 实现，保留进程、进程生命周期和任务模型的正确课程递进；
+- Lesson 61、71 的稳定版本包含已审阅的 graphics handoff 和 Makefile 检查修复；
+- stable 目录包含课程源码、Makefile、GRUB/linker 配置、`build/` 产物及本地启动验证所需脚本；stable 快照默认按只读规则保护。
+
+历史的 learning/stable 对比结果保留在 [`docs/learning-stable-diff-report.md`](docs/learning-stable-diff-report.md)，比较工具为 [`scripts/compare-course-variants.py`](scripts/compare-course-variants.py)。该报告用于说明 canonical 选择，不代表仓库继续发布两个可选版本。
+
+## 新下载后的本地验证
+
+先安装 GCC multilib、binutils、GNU GRUB 工具、xorriso/mtools、Make、QEMU、Python 3；GUI VGA 验收另需 `socat`。以 Ubuntu/Debian 为例：
+
+```bash
+sudo apt install build-essential gcc-multilib binutils grub-pc-bin grub-common \
+  xorriso mtools qemu-system-x86 python3 socat
+```
+
+克隆后可直接验证单课：
+
+```bash
+scripts/validate-course.sh 162 check   # build + make check
+scripts/validate-course.sh 162 qemu    # 隔离副本 build/check + QEMU smoke
+```
+
+脚本会复制 stable 课程到临时可写目录，不改写随仓库发布的 `build/` 和 ISO。Lesson 00 是文档课，执行 `scripts/validate-course.sh 00 check` 会提示使用 Lesson 01 stable 作为可执行基线。GUI 课程的真实窗口、键盘和鼠标验收仍应使用 [`scripts/qemu-vga-check.sh`](scripts/qemu-vga-check.sh) 和 [`docs/gui-debugging-playbook.md`](docs/gui-debugging-playbook.md) 中的专项流程。
+
+## 课程验证分层
+
+1. **结构检查**：确认课程文件、Makefile 目标和课程标记完整。
+2. **build**：生成内核 ELF 和 ISO，并检查编译器/链接器错误。
+3. **`make check`**：执行 Multiboot2 和课程特定的静态断言。
+4. **QEMU 启动冒烟**：确认 ISO 能启动、VGA 可见、没有 triple fault 或异常退出。
+5. **专项验收**：对 GUI 课程检查 framebuffer、窗口、Terminal、键盘和真实 PS/2 鼠标；后续课程检查其新功能及保留的 GUI/VGA 回归层。
+
+## 课程前后关系
+
+每个编号节点代表一节课，箭头表示“完成前一课后进入后一课”。课程主题的完整索引见 [`COURSE-MANIFEST.md`](COURSE-MANIFEST.md)。
+
+```mermaid
+flowchart LR
+  subgraph S0[启动链与基础输出]
+    L00 --> L01 --> L02 --> L03 --> L04 --> L05 --> L06 --> L07
+  end
+  subgraph S1[64 位内核、异常、中断与调度]
+    L08 --> L09 --> L10 --> L11 --> L12 --> L13 --> L14 --> L15 --> L16 --> L17 --> L18 --> L19 --> L20 --> L21 --> L22 --> L23 --> L24 --> L25 --> L26 --> L27 --> L28 --> L29 --> L30 --> L31
+  end
+  subgraph S2[用户程序、进程、虚拟内存与用户空间]
+    L32 --> L33 --> L34 --> L35 --> L36 --> L37 --> L38 --> L39 --> L40 --> L41 --> L42 --> L43 --> L44 --> L45 --> L46 --> L47 --> L48 --> L49 --> L50 --> L51 --> L52 --> L53 --> L54 --> L55 --> L56 --> L57 --> L58 --> L59 --> L60
+  end
+  subgraph GUI[图形桌面主线]
+    L61 --> L62 --> L63 --> L64 --> L65 --> L66 --> L67
+  end
+  subgraph S3[进程组、session、调度与 COW]
+    L68 --> L69 --> L70 --> L71 --> L72 --> L73 --> L74 --> L75 --> L76 --> L77 --> L78 --> L79 --> L80 --> L81 --> L82 --> L83 --> L84 --> L85 --> L86 --> L87
+  end
+  subgraph S4[VFS、设备、epoll 与服务]
+    L88 --> L89 --> L90 --> L91 --> L92 --> L93 --> L94 --> L95 --> L96 --> L97 --> L98 --> L99 --> L100 --> L101 --> L102 --> L103 --> L104 --> L105 --> L106 --> L107 --> L108 --> L109 --> L110 --> L111 --> L112
+  end
+  subgraph S5[并发、SMP、RCU 与诊断]
+    L113 --> L114 --> L115 --> L116 --> L117 --> L118 --> L119 --> L120 --> L121 --> L122 --> L123 --> L124 --> L125 --> L126 --> L127 --> L128 --> L129 --> L130 --> L131 --> L132 --> L133 --> L134 --> L135 --> L136 --> L137
+  end
+  subgraph S6[网络、namespace、cgroup 与安全]
+    L138 --> L139 --> L140 --> L141 --> L142 --> L143 --> L144 --> L145 --> L146 --> L147 --> L148 --> L149 --> L150 --> L151 --> L152 --> L153 --> L154 --> L155 --> L156 --> L157 --> L158 --> L159 --> L160 --> L161 --> L162
+  end
+  L07 --> L08
+  L31 --> L32
+  L60 --> L61
+  L67 --> L68
+  L87 --> L88
+  L112 --> L113
+  L137 --> L138
+```
 
 ## 课程进度
 
@@ -74,13 +156,13 @@
 | 58 | 有界多子进程 waitpid 选择 | 稳定 |
 | 59 | fork → exec → exit 完整元数据生命周期 | 稳定 |
 | 60 | 受控用户空间 job/session 模型 | 稳定 |
-| 61 | Multiboot2 framebuffer 与像素绘制 | 稳定 |
-| 62 | 固定 bitmap 字体、canvas 与基本绘图 | 稳定 |
-| 63 | 键盘/鼠标输入事件队列 | 稳定 |
-| 64 | 窗口、widget 与事件分发 | 稳定 |
-| 65 | 桌面 compositor 与窗口管理器 | 稳定 |
-| 66 | 图形 shell 与系统状态面板 | 稳定 |
-| 67 | 图形桌面综合验证 | 稳定 |
+| 61 | 可靠 framebuffer handoff 与图形输出前置 | 稳定 |
+| 62 | backbuffer、像素格式、bitmap font 与 canvas | 稳定 |
+| 63 | 键盘、PS/2 AUX 鼠标与输入事件队列 | 稳定 |
+| 64 | 桌面对象模型与事件分发 | 稳定 |
+| 65 | scene/compositor 与 Xfce 风格桌面 | 稳定 |
+| 66 | 图形 Terminal 与安全命令 dispatcher | 稳定 |
+| 67 | 图形桌面综合验收（GUI 结课） | 稳定 |
 | 68 | 进程组与 session 元数据 | 稳定 |
 | 69 | session 首领与控制终端所有权 | 稳定 |
 | 70 | 前台进程组切换与停止组保护 | 稳定 |

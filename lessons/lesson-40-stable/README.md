@@ -1,7 +1,6 @@
 # Lesson 40: bounded execve and ELF-like image loading
 
-> **Course status: stable snapshot (validated; verified build artifacts included).**
-
+> **Course status: stable snapshot (validated; canonical learning implementation promoted).**
 Lesson 40 adds a bounded Linux-style `execve`/ELF loader teaching model while preserving inherited kernel behavior. A tiny embedded ELF-like image is validated without allocation: magic, type/machine, program-header bounds, segment file/memory bounds, R/W/X flags, and entry-point range. The model builds deterministic argc/argv/envp stack metadata and never starts a real child or executes loaded bytes.
 
 ## Commands and tests

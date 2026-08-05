@@ -1,10 +1,12 @@
 # Lesson 37: Linux 风格 task_struct 与任务状态机教学模型
 
-> **Course status: learning implementation; no stable snapshot.**
+> **Course status: stable snapshot (validated; canonical learning implementation promoted).**
 
-Lesson 35 extends the validated embedded user image and bounded process/thread objects from Lesson 34. IRQ0 now distinguishes a CPL3-origin frame by its `CS` selector. For the single user thread, the scheduler copies and validates the complete privilege-return frame (`RIP`, `CS`, `RFLAGS`, `RSP`, `SS`, and all GPRs) into the thread context, then restores that exact context through the one `iretq` path.
+Lesson 37 begins the Linux-core transition without importing Linux's unbounded scheduler implementation. It adds a fixed four-entry `task_struct` analogue with PID, TID, parent PID, kernel/user kind, Linux-inspired task states, and transition counters. Existing process/thread and PIT behavior remain bounded and intact. `tasklist` displays the table and `taskvalidate` checks identity uniqueness, parent ordering, state validity, and bounded initialization.
 
-The PIT remains bounded at 100 Hz. A user-origin IRQ0 is acknowledged, records one preemption and one resume, and returns to the same validated user thread; it never dispatches an unsafe user IRQ callback or switches to another user address space. The saved `RFLAGS` preserves the user IF policy (the demo enters with IF clear), and invalid selectors or ranges are not accepted as a valid context. `processinfo` reports PIT user preempt/resume counters.
+The model follows concepts from Linux `include/linux/sched.h` (`struct task_struct`, task-state bits) and `kernel/sched/core.c` state-transition paths, while intentionally using a small teaching subset: `TASK_RUNNING`, interruptible/uninterruptible sleep, stopped/traced, zombie, and dead states. It is metadata and validation, not a claim of Linux ABI or scheduler equivalence.
+
+The inherited user-image validation, CPL3 syscall ABI, and PIT save/restore boundary are preserved. `processinfo`, `threadinfo`, `tasklist`, and `taskvalidate` expose the relevant bounded runtime state.
 
 ## Validation
 
@@ -13,4 +15,4 @@ make clean && make -j"$(nproc)"
 make check
 ```
 
-From a fresh QEMU boot, run `processtest`, `cpl3test`, and `processinfo`. Run `syscallinfo` and `threadinfo` to confirm the inherited ABI, PIT rate, and scheduler policy. The banner, `about`, and `help` text identify Lesson 35 and the bounded CPL3 IRQ0 save/restore boundary.
+From a fresh QEMU boot, run `tasklist` and `taskvalidate`, then `processtest`, `cpl3test`, and `processinfo`. Run `syscallinfo` and `threadinfo` to confirm the inherited ABI, PIT rate, and scheduler policy. The banner, `about`, and `help` text identify the bounded task table and preserved CPL3 IRQ0 save/restore boundary.

@@ -1,6 +1,6 @@
 # Lesson 35: bounded PIT preemption of one CPL3 user thread
 
-> **Course status: learning implementation; no stable snapshot.**
+> **Course status: stable snapshot (validated; canonical learning implementation promoted).**
 
 Lesson 35 extends the validated embedded user image and bounded process/thread objects from Lesson 34. IRQ0 now distinguishes a CPL3-origin frame by its `CS` selector. For the single user thread, the scheduler copies and validates the complete privilege-return frame (`RIP`, `CS`, `RFLAGS`, `RSP`, `SS`, and all GPRs) into the thread context, then restores that exact context through the one `iretq` path.
 

@@ -1,6 +1,6 @@
 # Lesson 27: bounded final-PT dual-alias mapping registry
 
-> **Course status: stable snapshot (validated; verified build artifacts included).**
+> **Course status: stable snapshot (validated; canonical learning implementation promoted).**
 
 ## Goal
 
