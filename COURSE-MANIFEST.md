@@ -2,6 +2,8 @@
 
 本清单是 Lesson 00–162 课程主题、前后关系和阶段边界的索引；根目录 [`README.md`](README.md) 提供完整流程图。课程由 AI 辅助编写并经维护者审阅和验证，验证层次与限制见根 README。
 
+Lesson 00 与 Lesson 01 之间有 GRUB 源码研读支线：`0.1 → 0.2 → 0.3 → 0.4 → 0.5 → 0.6 → 0.7 → 0.8 → 0.9 → 0.10`，随后进入 Lesson 01。每个小节只有 `lesson-0.x-stable/`，不生成 TinyOS 内核；详情见 [`docs/grub-source-study.md`](docs/grub-source-study.md)。
+
 课程现在每节只保留 `lesson-XX-stable/` 一个可学习版本。完全相同的课程采用 stable；存在差异的课程先审阅 learning 实现，再将正确版本提升为 stable，避免沿用 stale stable。Lesson 34–37 的正确进程/任务实现已按此规则提升，Lesson 61、71 也采用审阅后的 learning-derived canonical 内容。stable 保留源码、`build/`、ISO 和启动验证配置。
 
 历史逐课差异由 [`scripts/compare-course-variants.py`](scripts/compare-course-variants.py) 生成，报告见 [`docs/learning-stable-diff-report.md`](docs/learning-stable-diff-report.md)。新下载后的本地验证入口见 [`docs/local-validation.md`](docs/local-validation.md) 和 [`scripts/validate-course.sh`](scripts/validate-course.sh)。

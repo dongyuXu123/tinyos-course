@@ -52,6 +52,15 @@ scripts/validate-course.sh 162 qemu    # 隔离副本 build/check + QEMU smoke
 4. **QEMU 启动冒烟**：确认 ISO 能启动、VGA 可见、没有 triple fault 或异常退出。
 5. **专项验收**：对 GUI 课程检查 framebuffer、窗口、Terminal、键盘和真实 PS/2 鼠标；后续课程检查其新功能及保留的 GUI/VGA 回归层。
 
+## GRUB 源码研读支线
+
+Lesson 00 与 Lesson 01 之间新增 10 个文档型 stable 小节，专门讲解 GNU GRUB 源码和启动产物：[`0.1`](lessons/lesson-0.1-stable/README.md) → [`0.2`](lessons/lesson-0.2-stable/README.md) → [`0.3`](lessons/lesson-0.3-stable/README.md) → [`0.4`](lessons/lesson-0.4-stable/README.md) → [`0.5`](lessons/lesson-0.5-stable/README.md) → [`0.6`](lessons/lesson-0.6-stable/README.md) → [`0.7`](lessons/lesson-0.7-stable/README.md) → [`0.8`](lessons/lesson-0.8-stable/README.md) → [`0.9`](lessons/lesson-0.9-stable/README.md) → [`0.10`](lessons/lesson-0.10-stable/README.md)。共享说明见 [`docs/grub-source-study.md`](docs/grub-source-study.md)。这些小节只读源码和工具输出，不改变 Lesson 01–162 的接口和验证基线。
+
+```mermaid
+flowchart LR
+  L00[Lesson 00 总览] --> G01[0.1 源码树] --> G02[0.2 配置分发] --> G03[0.3 文件系统] --> G04[0.4 ELF 装载] --> G05[0.5 Multiboot2 ABI] --> G06[0.6 MBI tags] --> G07[0.7 BIOS/UEFI] --> G08[0.8 镜像构建] --> G09[0.9 故障调试] --> G10[0.10 端到端] --> L01[Lesson 01]
+```
+
 ## 课程前后关系
 
 每个编号节点代表一节课，箭头表示“完成前一课后进入后一课”。课程主题的完整索引见 [`COURSE-MANIFEST.md`](COURSE-MANIFEST.md)。

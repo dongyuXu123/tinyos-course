@@ -1,127 +1,58 @@
 #!/usr/bin/env python3
-"""Compare paired TinyOS learning and stable lesson trees without modifying them."""
+"""Compare paired TinyOS lesson trees without modifying course directories."""
 from __future__ import annotations
-
-import argparse
-import difflib
-import hashlib
-import re
+import argparse, difflib, hashlib, re
 from pathlib import Path
 
-IGNORED_PARTS = {"build"}
-IGNORED_NAMES = {".tinyos-screen-", ".tinyos-vga-"}
-STATUS_RE = re.compile(
-    r"(?m)^(> \*\*Course status: ).*(\*\*\.?\s*)$"
-)
+IGNORED_PARTS={"build"}; IGNORED_NAMES={".tinyos-screen-", ".tinyos-vga-"}
+STATUS_RE=re.compile(r"(?m)^(> \*\*Course status: ).*(\*\*\.?\s*)$")
+ID_RE=re.compile(r"^lesson-(.+)-(stable|learning)$")
 
-
-def ignored(path: Path) -> bool:
-    return any(part in IGNORED_PARTS for part in path.parts) or any(
-        path.name.startswith(prefix) for prefix in IGNORED_NAMES
-    )
-
-
-def files(root: Path) -> set[str]:
-    return {
-        p.relative_to(root).as_posix()
-        for p in root.rglob("*")
-        if p.is_file() and not ignored(p.relative_to(root))
-    }
-
-
-def normalized(path: Path, rel: str) -> bytes:
-    data = path.joinpath(rel).read_bytes()
-    if rel == "README.md":
-        text = data.decode("utf-8")
-        text = STATUS_RE.sub(r"\1<variant status>\2", text)
-        data = text.encode("utf-8")
+def ignored(path):
+    return any(part in IGNORED_PARTS for part in path.parts) or any(path.name.startswith(p) for p in IGNORED_NAMES)
+def files(root):
+    return {p.relative_to(root).as_posix() for p in root.rglob('*') if p.is_file() and not ignored(p.relative_to(root))}
+def normalized(path, rel):
+    data=path.joinpath(rel).read_bytes()
+    if rel=='README.md': data=STATUS_RE.sub(r'\1<variant status>\2',data.decode('utf-8')).encode()
     return data
-
-
-def digest(data: bytes) -> str:
-    return hashlib.sha256(data).hexdigest()[:12]
-
-
-def classify(learning: Path, stable: Path) -> tuple[str, list[str], list[str]]:
-    lf, sf = files(learning), files(stable)
-    all_files = sorted(lf | sf)
-    missing = [f for f in all_files if f not in lf or f not in sf]
-    changed = [
-        f for f in all_files if f in lf and f in sf and normalized(learning, f) != normalized(stable, f)
-    ]
-    substantive = [f for f in changed if f != "README.md"] + missing
-    if not substantive:
-        category = "identical" if not changed else "documentation-only"
-    else:
-        category = "source-difference"
-    return category, changed, missing
-
-
-def short_diff(learning: Path, stable: Path, rel: str) -> str:
-    if rel not in files(learning) or rel not in files(stable):
-        return "file added/removed"
-    a = normalized(learning, rel).decode("utf-8", errors="replace").splitlines()
-    b = normalized(stable, rel).decode("utf-8", errors="replace").splitlines()
-    diff = list(difflib.unified_diff(b, a, fromfile="stable", tofile="learning", n=1))
-    meaningful = [line for line in diff if line.startswith(("+", "-")) and not line.startswith(("+++", "---"))]
-    if not meaningful:
-        return "binary or formatting difference"
-    sample = " ".join(line[1:].strip() for line in meaningful[:2]).strip()
-    return sample[:180] or "content differs"
-
-
-def main() -> int:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1])
-    parser.add_argument("--output", type=Path, default=None)
-    args = parser.parse_args()
-    lessons = args.root / "lessons"
-    rows = []
-    for number in range(163):
-        name = f"lesson-{number:02d}"
-        learning, stable = lessons / f"{name}-learning", lessons / f"{name}-stable"
-        # After canonicalization the repository intentionally contains only stable.
-        if not learning.is_dir() and stable.is_dir():
-            continue
-        if not learning.is_dir() or not stable.is_dir():
-            raise SystemExit(f"missing pair: {name}")
-        category, changed, missing = classify(learning, stable)
-        rows.append((number, category, changed, missing, learning, stable))
-
-    output = args.output or args.root / "docs" / "learning-stable-diff-report.md"
-    output.parent.mkdir(parents=True, exist_ok=True)
-    counts = {}
-    for _, category, *_ in rows:
-        counts[category] = counts.get(category, 0) + 1
-    with output.open("w", encoding="utf-8") as report:
-        report.write("# Learning / stable 差异报告\n\n")
-        report.write("> 由 `scripts/compare-course-variants.py` 生成。比较为只读操作，不删除或修改课程文件。\n\n")
-        report.write("## 比较规则\n\n")
-        report.write("- 覆盖 Lesson 00–162 的全部 163 对目录。\n")
-        report.write("- 排除 `build/`、`.tinyos-screen-*` 和 `.tinyos-vga-*` 生成物。\n")
-        report.write("- README 的 `Course status` 行归一化后比较；其他 README 内容仍会被报告。\n")
-        report.write("- `identical` 表示归一化后无差异；`documentation-only` 表示只有 README 状态或文档差异；`source-difference` 表示存在源码、Makefile、启动配置或文件集合差异。\n\n")
-        report.write("## 汇总\n\n")
-        report.write("| 分类 | 数量 |\n|---|---:|\n")
-        labels = {"identical": "完全相同", "documentation-only": "仅文档差异", "source-difference": "源码/结构差异"}
-        for key in ("identical", "documentation-only", "source-difference"):
-            report.write(f"| {labels[key]} (`{key}`) | {counts.get(key, 0)} |\n")
-        report.write("\n## 逐课结果\n\n| Lesson | 分类 | 差异文件 | 缺失/新增文件 |\n|---:|---|---|---|\n")
-        for number, category, changed, missing, learning, stable in rows:
-            details = []
-            for rel in changed:
-                details.append(f"`{rel}` — {short_diff(learning, stable, rel)}")
-            report.write(f"| {number:02d} | `{category}` | {'<br>'.join(details) or '—'} | {', '.join(f'`{x}`' for x in missing) or '—'} |\n")
-        report.write("\n## 重点差异解读\n\n")
-        report.write("- Lesson 35–37 的 `kernel64.c` 属于真实教学源码差异，不能按重复版本处理；应分别审阅 learning 的实验进展和 stable 的验证快照。\n")
-        report.write("- Lesson 61 的启动配置涉及 Multiboot2 graphics handoff，属于图形课程边界差异。\n")
-        report.write("- Lesson 71 的 Makefile 差异仅为格式变化，不代表构建语义不同。\n")
-        report.write("- Lesson 67 的屏幕/VGA 文件被排除，它们是验证证据，不是课程源码。\n")
-    print(f"wrote {output}")
-    for key in ("identical", "documentation-only", "source-difference"):
-        print(f"{key}: {counts.get(key, 0)}")
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
+def classify(learning, stable):
+    lf,sf=files(learning),files(stable); all_files=sorted(lf|sf)
+    missing=[f for f in all_files if f not in lf or f not in sf]
+    changed=[f for f in all_files if f in lf and f in sf and normalized(learning,f)!=normalized(stable,f)]
+    substantive=[f for f in changed if f!='README.md']+missing
+    return ('identical' if not changed else 'documentation-only') if not substantive else 'source-difference',changed,missing
+def short_diff(learning,stable,rel):
+    if rel not in files(learning) or rel not in files(stable): return 'file added/removed'
+    a=normalized(learning,rel).decode(errors='replace').splitlines(); b=normalized(stable,rel).decode(errors='replace').splitlines()
+    diff=list(difflib.unified_diff(b,a,n=1)); meaningful=[x for x in diff if x.startswith(('+','-')) and not x.startswith(('+++','---'))]
+    return ' '.join(x[1:].strip() for x in meaningful[:2])[:180] or 'binary or formatting difference'
+def natural_id(value):
+    return tuple(int(x) if x.isdigit() else x for x in re.split(r'(\d+)',value))
+def main():
+    p=argparse.ArgumentParser(); p.add_argument('--root',type=Path,default=Path(__file__).resolve().parents[1]); p.add_argument('--output',type=Path); args=p.parse_args()
+    lessons=args.root/'lessons'; ids={}
+    for d in lessons.iterdir():
+        if not d.is_dir(): continue
+        m=ID_RE.match(d.name)
+        if m: ids.setdefault(m.group(1),{})[m.group(2)]=d
+    rows=[]
+    for ident, pair in sorted(ids.items(),key=lambda x:natural_id(x[0])):
+        if 'stable' not in pair: raise SystemExit(f'missing stable lesson: {ident}')
+        if 'learning' not in pair: continue
+        category,changed,missing=classify(pair['learning'],pair['stable']); rows.append((ident,category,changed,missing,pair['learning'],pair['stable']))
+    output=args.output or args.root/'docs/learning-stable-diff-report.md'; output.parent.mkdir(parents=True,exist_ok=True)
+    counts={}
+    for _,c,*_ in rows: counts[c]=counts.get(c,0)+1
+    with output.open('w',encoding='utf-8') as r:
+        r.write('# Learning / stable 历史差异报告\n\n> 当前仓库只发布 stable；本报告只记录仍存在配对目录的历史审计结果。\n\n')
+        r.write(f'- 自动发现 stable 课程：{len(ids)} 对象；仍有 learning/stable 配对：{len(rows)}。\n- 排除 `build/`、`.tinyos-screen-*`、`.tinyos-vga-*`；README 状态行归一化。\n\n')
+        r.write('## 汇总\n\n| 分类 | 数量 |\n|---|---:|\n')
+        labels={'identical':'完全相同','documentation-only':'仅文档差异','source-difference':'源码/结构差异'}
+        for k in labels: r.write(f'| {labels[k]} (`{k}`) | {counts.get(k,0)} |\n')
+        r.write('\n## 仍存在配对的逐课结果\n\n| Lesson | 分类 | 差异文件 |\n|---|---|---|\n')
+        for ident,c,changed,missing,l,s in rows:
+            details=[f'`{x}` — {short_diff(l,s,x)}' for x in changed]+[f'`{x}` missing' for x in missing]
+            r.write(f'| {ident} | `{c}` | {"<br>".join(details) or "—"} |\n')
+    print(f'wrote {output}; stable objects={len(ids)} pairs={len(rows)}')
+if __name__=='__main__': main()

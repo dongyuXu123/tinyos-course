@@ -1,6 +1,6 @@
 # 本地课程验证
 
-仓库现在每节课只发布 `lesson-XX-stable/`。stable 目录包含课程源码、Makefile、GRUB/linker 配置和已保存的 `build/` 产物；验证脚本不会依赖仓库外的内核文件。
+仓库现在每节可执行课只发布 `lesson-XX-stable/`；Lesson 00 和新增的 `lesson-0.1-stable`–`lesson-0.10-stable` 是文档型 stable 课程。可执行 stable 目录包含课程源码、Makefile、GRUB/linker 配置和已保存的 `build/` 产物；验证脚本不会依赖仓库外的内核文件。
 
 ## 依赖
 
@@ -14,6 +14,7 @@ sudo apt install build-essential gcc-multilib binutils grub-pc-bin grub-common \
 ## 单课验证
 
 ```bash
+scripts/validate-course.sh 0.1 check  # GRUB 源码研读小节
 scripts/validate-course.sh 34 check
 scripts/validate-course.sh 162 qemu
 ```
@@ -39,6 +40,9 @@ scripts/qemu-vga-check.sh lessons/lesson-67-stable guiinfo drawtest fonttest can
 ```bash
 for n in $(seq 1 162); do
   scripts/validate-course.sh "$n" check || exit $?
+done
+for n in $(seq 1 10); do
+  scripts/validate-course.sh "0.$n" check || exit $?
 done
 ```
 

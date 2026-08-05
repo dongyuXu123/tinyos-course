@@ -6,15 +6,24 @@ OUT=${TINYOS_VALIDATE_OUT:-${TMPDIR:-/tmp}/tinyos-validate-$$}
 LESSON=${1:-}
 MODE=${2:-check}
 
-if [[ -z "$LESSON" || ! "$LESSON" =~ ^[0-9]{1,3}$ ]]; then
+if [[ -z "$LESSON" || ! "$LESSON" =~ ^([0-9]{1,3}|0\.[0-9]{1,2})$ ]]; then
   printf 'usage: %s LESSON [check|qemu]\n' "$0" >&2
   exit 2
 fi
-n=$(printf '%02d' "$((10#$LESSON))")
+if [[ "$LESSON" == 0.* ]]; then
+  n="$LESSON"
+else
+  n=$(printf '%02d' "$((10#$LESSON))")
+fi
 source_dir="$ROOT/lessons/lesson-$n-stable"
 [[ -d "$source_dir" ]] || { printf 'missing stable lesson: %s\n' "$n" >&2; exit 1; }
 if [[ "$n" == 00 ]]; then
   printf 'Lesson 00 is documentation-only; validate lesson-01-stable as its executable baseline.\n'
+  exit 0
+fi
+if [[ "$n" == 0.* ]]; then
+  python3 "$ROOT/scripts/check-grub-lessons.py" --lesson "$n"
+  printf 'lesson-%s GRUB study validation: PASS\n' "$n"
   exit 0
 fi
 
