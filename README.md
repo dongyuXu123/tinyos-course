@@ -9,6 +9,7 @@
 - 验证：每课都在 QEMU VGA 上可见验证，不以串口为准。
 - 规范权威：Intel SDM、Multiboot2 规范、GNU GRUB；Linux 内核源码仅作工程对照。
 - GUI 调试经验：[`docs/gui-debugging-playbook.md`](docs/gui-debugging-playbook.md)，覆盖 Lesson 61–67 的 framebuffer、绘图、鼠标、compositor、Terminal 和 QEMU 验收。
+- 初学者学习文档：[`docs/learning-guide.md`](docs/learning-guide.md)，从零起步的全课程学习路线、启动链（Lesson 00–08）逐行源码精讲与各阶段学习指引。
 
 ## AI 编写与验证声明
 
