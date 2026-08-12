@@ -1,0 +1,4 @@
+Mini-GRUB B23 acceptance run: 2026-08-09T19:36:43+08:00
+all check: PASS (23 passed, 0 failed)
+all qemu:  PASS (23 passed, 0 failed)
+run log: /tmp/b23-all-qemu.log

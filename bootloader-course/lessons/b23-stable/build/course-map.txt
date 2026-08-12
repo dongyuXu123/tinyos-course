@@ -1,0 +1,24 @@
+lesson	status	topic
+b01	implemented	512 字节引导扇区 Hello — 精讲文档
+b02	implemented	两段式引导 — 精讲文档
+b03	implemented	保护模式切换 — 精讲文档
+b04	implemented	保护模式 C 运行时与 VGA 文本库 — 精讲文档
+b05	implemented	实模式回调磁盘读 — 精讲文档
+b06	implemented	ELF32 解析 — 精讲文档
+b07	implemented	Multiboot2 header 校验 — 精讲文档
+b08	implemented	PT_LOAD 装载与首个交接 — 精讲文档
+b09	implemented	MBI 结构 — 精讲文档
+b10	implemented	E820 → type-6 mmap tag — 精讲文档
+b11	implemented	装载框架（load/boot 分离）— 课程规划（设计中）
+b12	implemented	综合 checkpoint — 启动 TinyOS L01/L05 — 精讲文档
+b13	implemented	ISO9660 基础读取 — 精讲文档
+b14	implemented	路径查找与文件抽象 — 精讲文档
+b15	implemented	El Torito 光盘引导 — 精讲文档
+b16	implemented	命令注册表与极简 grub> 命令行 — 精讲文档
+b17	implemented	grub.cfg 解析执行 — 精讲文档
+b18	implemented	menuentry 菜单与 timeout/default — 精讲文档
+b19	implemented	模块系统（核心 + 按需加载）— 精讲文档
+b20	implemented	VBE framebuffer — 精讲文档
+b21	implemented	type-8 framebuffer tag → 启动 TinyOS GUI — 精讲文档
+b22	implemented	故障调试与 rescue 模式 — 精讲文档
+b23	implemented	端到端综合验收 — 精讲文档

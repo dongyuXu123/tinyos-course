@@ -10,6 +10,7 @@
 - 规范权威：Intel SDM、Multiboot2 规范、GNU GRUB；Linux 内核源码仅作工程对照。
 - GUI 调试经验：[`docs/gui-debugging-playbook.md`](docs/gui-debugging-playbook.md)，覆盖 Lesson 61–67 的 framebuffer、绘图、鼠标、compositor、Terminal 和 QEMU 验收。
 - 初学者学习文档：[`docs/learning-guide.md`](docs/learning-guide.md)，从零起步的全课程学习路线、启动链（Lesson 00–08）逐行源码精讲与各阶段学习指引。
+- Linux 0.11 源码教学模块：[`linux011-course/README.md`](linux011-course/README.md)，包含完整的用户指定源码副本、模块总结、源码锚点注释和启动/加载顺序说明；它不属于 TinyOS 可执行课程。
 
 ## AI 编写与验证声明
 
@@ -60,6 +61,54 @@ Lesson 00 与 Lesson 01 之间新增 10 个文档型 stable 小节，专门讲�
 ```mermaid
 flowchart LR
   L00[Lesson 00 总览] --> G01[0.1 源码树] --> G02[0.2 配置分发] --> G03[0.3 文件系统] --> G04[0.4 ELF 装载] --> G05[0.5 Multiboot2 ABI] --> G06[0.6 MBI tags] --> G07[0.7 BIOS/UEFI] --> G08[0.8 镜像构建] --> G09[0.9 故障调试] --> G10[0.10 端到端] --> L01[Lesson 01]
+```
+
+## 从零写 GRUB（Mini-GRUB 实现支线）
+
+独立顶层课程 [`bootloader-course/`](bootloader-course/README.md)：在研读支线之后
+**动手从零复刻 GRUB 的 i386-pc 核心路径**（实模式引导 → 保护模式 → ELF/Multiboot2
+装载 → MBI → ISO9660/El Torito → 配置脚本 → 模块系统 → VBE 图形），以渐进式教学
+推进，每课保留自己的源码与提交的 build 产物。课程共 23 课（B01–B23）：
+
+- **已实现并验证**：B01–B22 共 22 课全部 `make` + `make check` + QEMU 冒烟 +
+  VGA 文本专项验证通过——实模式引导（B01–B05）、ELF/Multiboot2 装载
+  （B06–B11）、B12 已用自写引导器启动 TinyOS L01/L05、ISO9660 与 El Torito
+  光盘引导（B13–B15，loader 从 CD 按路径读出并启动测试内核）、配置脚本与
+  交互（B16–B18，grub.cfg 解析执行 + menuentry 菜单）、模块系统
+  （B19，ET_REL .mod 按需加载，insmod/lsmod 闭环）、VBE framebuffer
+  （B20，800x600x32 LFB + 像素探针）、type-8 fb tag 启动 TinyOS L61 GUI
+  （B21）、故障调试与 rescue（B22，错误分类 + `rescue>` 降级）；
+- **终课验收**：B23 提供 `validate-course.sh all check|qemu` 全课程回归入口与
+  [`source-to-screen`](bootloader-course/docs/source-to-screen.md) 时序文档，
+  B01–B23 全部 23 课回归 PASS；
+- **逐字复刻层**：核心文件与 GRUB 2.14 源码逐字节一致（26 个文件原样归档于
+  [`bootloader-course/reference/grub-2.14/`](bootloader-course/reference/grub-2.14/)，
+  [`verify-reference.sh`](bootloader-course/reference/verify-reference.sh) 两层
+  sha256 校验），三层一致性声明见
+  [`docs/consistency.md`](bootloader-course/docs/consistency.md)。
+- 共享参照：[`bootloader-course/docs/grub-implementation-guide.md`](bootloader-course/docs/grub-implementation-guide.md)；
+  验证入口：`bootloader-course/scripts/validate-course.sh b01 check|qemu`。
+
+```mermaid
+flowchart LR
+  G10[0.10 端到端] --> B01 --> B02 --> B03 --> B04 --> B05
+  subgraph 装载[阶段二 ELF/Multiboot2]
+    B06 --> B07 --> B08 --> B09 --> B10 --> B11 --> B12[TinyOS L01/L05]
+  end
+  B05 --> B06
+  subgraph 光盘[阶段三 ISO9660/El Torito]
+    B13 --> B14 --> B15
+  end
+  B12 --> B13
+  subgraph 配置[阶段四 配置与交互]
+    B16 --> B17 --> B18
+  end
+  B15 --> B16
+  subgraph 图形[阶段五 模块与 VBE]
+    B19 --> B20 --> B21[TinyOS L61 GUI]
+  end
+  B18 --> B19
+  B21 --> B22 --> B23
 ```
 
 ## 课程前后关系
