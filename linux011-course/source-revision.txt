@@ -1,0 +1,3 @@
+branch: master
+commit: f8d044e078f5e5ee20a3ad2f72c243f041526983
+origin: https://github.com/karottc/linux-0.11
