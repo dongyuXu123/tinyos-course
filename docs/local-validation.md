@@ -25,21 +25,14 @@ Lesson 00 只有启动链说明，没有独立内核；它的可执行基线是 
 
 ## Linux 0.11 源码模块
 
-Linux 0.11 是独立的完整源码副本，不属于 TinyOS build/QEMU 验证矩阵。校验清单 `source.sha256` 内的路径相对于 `linux011-course/` 目录，因此执行：
-
-```bash
-python3 linux011-course/scripts/check-source-study.py
-(cd linux011-course && sha256sum -c source.sha256)
-```
-
-也可以进入 `linux011-course/` 后执行：
+Linux 0.11 源码阅读课程已拆分为**独立仓库** **https://github.com/dongyuXu123/linux011-course**（不属于 TinyOS build/QEMU 验证矩阵）。克隆后在 `linux011-course/` 目录内执行：
 
 ```bash
 python3 scripts/check-source-study.py
 sha256sum -c source.sha256
 ```
 
-不会默认运行 Linux 0.11 的 Makefile、安装脚本、磁盘写入目标或 QEMU。源码来源、固定 commit、模块总结和启动/加载顺序见 [`linux011-course/README.md`](../linux011-course/README.md)。本轮 Linux 轨道的发布范围是 `linux011-course/**` 及其已接入的根级文档；`bootloader-course/` 是另一条独立支线，不属于 Linux 0.11 模块。完整源码副本仍保留来源、commit、注释归属和未发现许可证文件的事实；在继续分发前，维护者仍需完成第三方许可证与归属审查。
+不会默认运行 Linux 0.11 的 Makefile、安装脚本、磁盘写入目标或 QEMU。源码来源、固定 commit、模块总结和启动/加载顺序见其仓库 README。完整源码副本仍保留来源、commit、注释归属和未发现许可证文件的事实；在继续分发前，维护者仍需完成第三方许可证与归属审查。
 
 ## GUI 验收
 

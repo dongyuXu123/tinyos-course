@@ -10,9 +10,9 @@ Lesson 00 与 Lesson 01 之间有 GRUB 源码研读支线：`0.1 → 0.2 → 0.3
 
 GUI 课程总览与调试经验见 [`docs/gui-debugging-playbook.md`](docs/gui-debugging-playbook.md)。GUI 主线为 Lesson 61–67，Lesson 67 结课，Lesson 68 恢复进程组/session 主线。
 
-独立顶层课程 [`bootloader-course/`](bootloader-course/README.md) 是从零写 GRUB（Mini-GRUB 实现支线）：B01–B23 共 23 课，复刻 GRUB 的 i386-pc 核心路径，与 0.1–0.10 研读支线互补；B01–B23 已全部实现并验证（ISO9660/El Torito 光盘引导、配置脚本菜单、模块系统、VBE framebuffer、type-8 tag 启动 TinyOS L61 GUI、故障 rescue、`all` 全课程回归）。核心文件与 GRUB 2.14 源码逐字节一致的复刻层见 [`bootloader-course/reference/`](bootloader-course/reference/README.md)（26 个文件，`verify-reference.sh` 两层 sha256 校验）。验证入口 `bootloader-course/scripts/validate-course.sh`。
+独立课程仓库 [grub-course](https://github.com/dongyuXu123/grub-course) 是从零写 GRUB（Mini-GRUB 实现支线）：B01–B23 共 23 课，复刻 GRUB 的 i386-pc 核心路径，与 0.1–0.10 研读支线互补；全部已实现并验证（ISO9660/El Torito 光盘引导、配置脚本菜单、模块系统、VBE framebuffer、type-8 tag 启动 TinyOS L61 GUI、故障 rescue、`all` 全课程回归）。核心文件与 GRUB 2.14 源码逐字节一致的复刻层见其 `reference/`（26 个文件，`verify-reference.sh` 两层 sha256 校验）。验证入口 `scripts/validate-course.sh`。
 
-独立源码研究轨道：[`linux011-course/README.md`](linux011-course/README.md)。该轨道固定用户指定的 `karottc/linux-0.11` 副本，提供 boot、init、进程调度、内存、文件系统、设备/TTY、系统调用和用户空间模块总结，以及启动/加载顺序说明；不改变 Lesson 00–162 的编号或 TinyOS 构建验证。
+独立源码研究轨道已拆分为独立仓库 [linux011-course](https://github.com/dongyuXu123/linux011-course)：固定用户指定的 `karottc/linux-0.11` 副本，提供 boot、init、进程调度、内存、文件系统、设备/TTY、系统调用和用户空间模块总结，以及启动/加载顺序说明；不改变 Lesson 00–162 的编号或 TinyOS 构建验证。
 
 | Lesson | Main content | Origin |
 |---:|---|---|
